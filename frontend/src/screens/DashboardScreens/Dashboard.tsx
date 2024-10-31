@@ -830,7 +830,7 @@ const BulkCreateLinkDrawer = ({ openedBulkCreateLink, setOpenedBulkCreateLink }:
 		}
 	};
 	
-    return (
+	    return (
         <Drawer
             title="Bulk Create Short URLs"
             placement="right"
@@ -838,12 +838,35 @@ const BulkCreateLinkDrawer = ({ openedBulkCreateLink, setOpenedBulkCreateLink }:
             open={openedBulkCreateLink}
         >
             <div>
-                <input type="file" onChange={handleFileChange} />
-                <Button onClick={handleBulkSubmit} disabled={isLoading} loading={isLoading}>
-                    Submit
-                </Button>
+			<p><strong>Allowed File Types:</strong> JSON or TXT</p>
+				<p><strong>JSON Format:</strong></p>
+				<pre>{`{
+    "links": [
+        {
+            "long_url": "https://anotherexample2.com",
+            "title": "Example 1"
+        },
+        ...
+    ]
+}`}</pre>
+
+				<p><strong>TXT Format:</strong></p>
+				<pre>{`https://exampl111e.com,Example Title 111
+https://anotherexample11111111.com,Another1 Example
+https://yetanotherexample11111.com,Yet Another1111 Example`}</pre>
+
+				<input type="file" onChange={handleFileChange} accept=".json,.txt" />
+
+				<Button
+								size={'large'}
+								onClick={handleBulkSubmit}
+								type="primary"
+								disabled={isLoading}
+								loading={isLoading}
+							>
+								Submit
+							</Button>
             </div>
         </Drawer>
     );
 };
-

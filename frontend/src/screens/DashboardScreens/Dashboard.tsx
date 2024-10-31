@@ -642,8 +642,8 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 				</div>
 			</div>
 			<div className="url-pane">
-				<a href={`/${stub}`} rel="noreferrer" target="_blank">
-					<p>url-bit.web.app/{stub}</p>
+				<a href={`http://localhost:5002/${stub}`} rel="noreferrer" target="_blank">
+					<p>http://localhost:5002/{stub}</p>
 				</a>
 				<i onClick={handleCopy} style={{ cursor: 'pointer' }} className="fa-solid fa-copy"></i>
 			</div>

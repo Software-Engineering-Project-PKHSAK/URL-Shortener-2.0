@@ -24,7 +24,7 @@
 
 
 from operator import and_
-from flask import Blueprint, jsonify               #import dependancies
+from flask import Blueprint, jsonify,redirect                #import dependancies
 from flask_cors import cross_origin
 from string import ascii_letters, digits
 from flask import request
@@ -339,3 +339,38 @@ def create_engagement(link_id):
             message = f'Create Engagement Failed {e}',
             status = 400
         ), 400
+
+
+@links_bp.route('/<stub>', methods=['GET'])
+def redirect_stub(stub):
+    """Redirects the short URL stub to its corresponding long URL."""
+    try:
+        # Look for the stub in the registered users' links
+        link = Link.query.filter_by(stub=stub).first()
+
+        if link:
+            if link.disabled:
+                return jsonify(message="This link has been disabled.", status=403), 403
+            # elif link.max_visits and link.visit_count >= link.max_visits:
+            #     # Automatically disable the link if it has reached the maximum number of visits
+            #     link.disabled = True
+            #     db.session.commit()
+            #     return jsonify(message="This link has been disabled.", status=403), 403
+            
+            # Increment the visit count
+            # link.visit_count += 1
+            db.session.commit()
+            return redirect(link.long_url)
+        else:
+            # Stub not found in user links, you might want to check in anonymous links
+            anon_link = AnonymousLink.query.filter_by(stub=stub).first()
+            if anon_link:
+                return redirect(anon_link.long_url)
+            else:
+                return jsonify(message="Link not found.", status=404), 404
+                
+    except Exception as e:
+        return jsonify(
+            message=f"An error occurred: {e}",
+            status=500
+        ), 500

@@ -1,4 +1,4 @@
-import Login from 'screens/AuthScreens/Login'
+import Login from 'screens/AuthScreens/login'
 import Register from 'screens/AuthScreens/Register'
 import Dashboard from 'screens/DashboardScreens/Dashboard'
 import Home from 'screens/Home'

@@ -21,6 +21,7 @@ const Dashboard = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [statsData, setStatsData] = useState<any>(null);
 	const [linksData, setLinksData] = useState<any[]>([]);
+	const [openedBulkCreateLink, setOpenedBulkCreateLink] = useState<boolean>(false);
 
 	const URLshortenerUser = window.localStorage.getItem('URLshortenerUser');
 	let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
@@ -35,7 +36,7 @@ const Dashboard = () => {
 		// setIsLoading(true);
 
 		await http
-			.get(`/links/stats?user_id=${user_id}`)
+		    .get(`http://localhost:5002/links/stats?user_id=${user_id}`)
 			.then((res) => {
 				const { links } = res.data;
 				// setIsLoading(false);
@@ -50,7 +51,7 @@ const Dashboard = () => {
 		setIsLoading(true);
 
 		await http
-			.get(`/links/all?user_id=${user_id}`)
+		    .get(`http://localhost:5002/links/all?user_id=${user_id}`)
 			.then((res) => {
 				const { links } = res.data;
 				setIsLoading(false);
@@ -103,6 +104,9 @@ const Dashboard = () => {
 								<button className="btn btn-main" onClick={() => setOpenedCreateLink(true)}>
 									Shorten Link
 								</button>
+								<button className="btn btn-main" onClick={() => setOpenedBulkCreateLink(true)}>
+                                        Bulk Shorten Links
+                                </button>
 							</div>
 						</div>
 					</div>
@@ -145,6 +149,10 @@ const Dashboard = () => {
 			<ViewLinkDrawer openedLink={openedViewLink} setOpenedLink={setOpenedViewLink} />
 			<UpdateLinkDrawer openedLink={openedLink} setOpenedLink={setOpenedLink} />
 			<CreateLinkDrawer openedCreateLink={openedCreateLink} setOpenedCreateLink={setOpenedCreateLink} />
+			<BulkCreateLinkDrawer 
+    openedBulkCreateLink={openedBulkCreateLink} 
+    setOpenedBulkCreateLink={setOpenedBulkCreateLink} 
+/>
 		</div>
 	);
 };
@@ -171,7 +179,7 @@ const ViewLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
 	const fetchLink = async () => {
 		setIsLoading(true);
 		await http
-			.get(`/links/${id}`, payload)
+	        .get(`http://localhost:5002/links/${id}`, payload)
 			.then((res) => {
 				setIsLoading(false);
 			})
@@ -183,7 +191,7 @@ const ViewLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
   const fetchLinkEngagements = async () => {
 		setIsLoading(true);
 		await http
-			.get(`/links/${id}/engagements?user_id=${user_id}`, payload)
+		    .get(`http://localhost:5002/links/${id}/engagements?user_id=${user_id}`, payload)
 			.then((res) => {
         const _engagements = res.data?.engagements
 				setIsLoading(false);
@@ -227,6 +235,7 @@ const CreateLinkDrawer = ({ openedCreateLink, setOpenedCreateLink }: any) => {
 		utm_medium: null,
 		utm_source: null,
 		utm_term: null,
+		max_visits: null,
 	});
 
 	const handleChange = (propertyName: string, e: any) => {
@@ -251,7 +260,7 @@ const CreateLinkDrawer = ({ openedCreateLink, setOpenedCreateLink }: any) => {
 		setIsLoading(true);
 		// console.log(payload);
 		await http
-			.post(`/links/create?user_id=${user_id}`, payload)
+		    .post(`http://localhost:5002/links/create?user_id=${user_id}`, payload)
 			.then((res) => {
 				Swal.fire({
 					icon: 'success',
@@ -292,9 +301,19 @@ const CreateLinkDrawer = ({ openedCreateLink, setOpenedCreateLink }: any) => {
 						<Input onChange={(e) => handleChange('long_url', e)} size="large" />
 					</div>
 					<div className="form-group">
+					<label>Max Visits (optional)</label>
+									<Input
+										type="number"
+										min="1"
+										placeholder="Enter maximum number of visits"
+										onChange={(e) => handleChange('max_visits', e)}
+										size="large"
+									/>
+					</div>
+					{/* <div className="form-group">
 						<label>Custom end-link (optional)</label>
 						<Input onChange={(e) => handleChange('stub', e)} size="large" />
-					</div>
+					</div> */}
 					<div className="form-group">
 						<span style={{ marginRight: '10px' }}>Enabled?</span>
 						<Switch defaultChecked onChange={handleSwitchChange} />
@@ -399,7 +418,7 @@ const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
 	const fetchLink = async () => {
 		setIsLoading(true);
 		await http
-			.get(`/links/${id}`, payload)
+		    .get(`http://localhost:5002/links/${id}`, payload)
 			.then((res) => {
 				setIsLoading(false);
 			})
@@ -414,7 +433,7 @@ const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
       delete payload.stub;
     }
 		await http
-			.patch(`/links/update/${id}?user_id=${user_id}`, payload)
+		    .patch(`http://localhost:5002/links/update/${id}?user_id=${user_id}`, payload)
 			.then((res) => {
 				Swal.fire({
 					icon: 'success',
@@ -525,7 +544,7 @@ const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
 };
 
 const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
-	const { id, title, stub, long_url, created_on, disabled } = item || {};
+	const { id, title, stub, long_url, created_on, disabled,max_visits=Infinity,visit_count=0} = item || {};
 
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -533,7 +552,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 	let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
 
 	const handleCopy = async () => {
-		const text = `url-bit.web.app/${stub}`;
+		const text = `http://localhost:5001/${stub}`;
 		if ('clipboard' in navigator) {
 			await navigator.clipboard.writeText(text);
 		} else {
@@ -549,21 +568,21 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 		});
 	};
 
-  const downloadQRCode = () => {
-    // Generate download with use canvas and stream
-    const canvas = document.getElementById("qr-gen") as HTMLCanvasElement;;
-    if (canvas) {
-      const pngUrl = canvas
-        .toDataURL("image/png")
-        .replace("image/png", "image/octet-stream");
-      let downloadLink = document.createElement("a");
-      downloadLink.href = pngUrl;
-      downloadLink.download = `qrcode.png`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    }
-  };
+//   const downloadQRCode = () => {
+//     // Generate download with use canvas and stream
+//     const canvas = document.getElementById("qr-gen") as HTMLCanvasElement;;
+//     if (canvas) {
+//       const pngUrl = canvas
+//         .toDataURL("image/png")
+//         .replace("image/png", "image/octet-stream");
+//       let downloadLink = document.createElement("a");
+//       downloadLink.href = pngUrl;
+//       downloadLink.download = `qrcode.png`;
+//       document.body.appendChild(downloadLink);
+//       downloadLink.click();
+//       document.body.removeChild(downloadLink);
+//     }
+//   };
 
 	const handleDisableEnableLink = async (e: any) => {
 		e.preventDefault();
@@ -574,7 +593,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 		};
 
 		await http
-			.patch(`/links/update/${id}?user_id=${user_id}`, payload)
+		    .patch(`http://localhost:5002/links/update/${id}?user_id=${user_id}`, payload)
 			.then((res) => {
 				const { id } = res.data;
 				Swal.fire({
@@ -598,15 +617,15 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 
 	const handleDeleteLink = async (e: any) => {
 		e.preventDefault();
-		const payload = {
-			// ...item,
-			long_url,
-			disabled: !disabled,
-		};
+		// const payload = {
+		// 	// ...item,
+		// 	long_url,
+		// 	disabled: !disabled,
+		// };
 
     setIsDeleting(true);
 		await http
-			.delete(`/links/delete/be70a7ee-a918-4162-895e-5618b9fca387?user_id=${user_id}`)
+		    .delete(`http://localhost:5002/links/delete/${id}?user_id=${user_id}`)
 			.then((res) => {
 				Swal.fire({
 					icon: 'success',
@@ -628,7 +647,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
         setIsDeleting(false);
 			});
 	};
-
+	const isExpired = visit_count >= max_visits;
 	return (
 		<div className="link-card">
 			<div className="d-flex justify-content-between">
@@ -642,8 +661,8 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 				</div>
 			</div>
 			<div className="url-pane">
-				<a href={`/${stub}`} rel="noreferrer" target="_blank">
-					<p>url-bit.web.app/{stub}</p>
+				<a href={`http://localhost:5002/${stub}`} rel="noreferrer" target="_blank">
+					<p>http://localhost:5002/{stub}</p>
 				</a>
 				<i onClick={handleCopy} style={{ cursor: 'pointer' }} className="fa-solid fa-copy"></i>
 			</div>
@@ -651,32 +670,36 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 				<b>Original URL:</b> {long_url}
 			</p>
 			<div className="btn-pane">
-				<button className="btn btn-outline-dark" onClick={() => setOpenedViewLink(item)}>
-					<i className="fa-solid fa-eye"></i> View Engagements Analytics
-				</button>
-				<button
-					className={`btn ${!disabled ? 'btn-outline-danger' : 'btn-outline-success'}`}
-					onClick={handleDisableEnableLink}
-				>
-					{!disabled ? <i className="fa-solid fa-link-slash"></i> : <i className="fa-solid fa-link"></i>}
-					{!disabled ? 'Disable Link' : 'Enable Link'}
-				</button>
-        <button className='btn btn-outline-dark'  onClick={downloadQRCode}>
+			{isExpired? (
+                    <p style={{ color: 'red' }}>
+                        <b>This link has expired due to reaching maximum visits.</b>
+                    </p>
+                ) : (
+					<>
+                    <button className="btn btn-outline-dark" onClick={() => setOpenedViewLink(item)}>
+                        <i className="fa-solid fa-eye"></i> View Engagements Analytics
+                    </button>
+					<button className="btn btn-outline-primary" onClick={() => setOpenedLink(item)}>
+                    <i className="fa-solid fa-pen-to-square"></i> Edit
+                </button>
+				</>
+                )}
+                
+                <Popconfirm
+                    title="Are you sure?"
+                    icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+                    onConfirm={handleDeleteLink}
+                >
+                    <button className="btn btn-outline-danger">
+                        <i className="fa-solid fa-trash"></i> {isDeleting ? 'Deleting' : 'Delete'}
+                    </button>
+                </Popconfirm>
+            </div>
+        {/* <button className='btn btn-outline-dark'  onClick={downloadQRCode}>
           <i className="fa-solid fa-download"></i>
           Download QR Code
-        </button>
-				<button className="btn btn-outline-primary" onClick={() => setOpenedLink(item)}>
-					<i className="fa-solid fa-pen-to-square"></i> Edit
-				</button>
-				<Popconfirm
-					title="Are you sure？"
-					icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-					onConfirm={handleDeleteLink}
-				>
-					<button className="btn btn-outline-danger">
-						<i className="fa-solid fa-trash"></i> {isDeleting ? 'Deleting' : 'Delete'}
-					</button>
-				</Popconfirm>
+        </button> */}
+			
         <div style={{display: 'none'}}>
           <QRCode
             id="qr-gen"
@@ -687,6 +710,163 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
           />
         </div>
 			</div>
-		</div>
 	);
+};
+
+const BulkCreateLinkDrawer = ({ openedBulkCreateLink, setOpenedBulkCreateLink }: any) => {
+
+	const URLshortenerUser = window.localStorage.getItem('URLshortenerUser');
+	let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
+    const [file, setFile] = useState<File | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+	const [jsonData, setJsonData] = useState<any>(null);
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files?.[0];
+		console.log('Selected file:', selectedFile); // Check if file is selected
+		if(!selectedFile) return;
+		setFile(selectedFile);
+        if (selectedFile && selectedFile.type === 'text/plain') {
+			const reader = new FileReader();
+			reader.onload = () => {
+				try {
+					const textContent = reader.result as string;
+					// Convert TXT content to JSON
+					const jsonData = txtToJson(textContent);
+					// Send the converted JSON to the backend
+					setJsonData(jsonData);
+					console.log('Converted JSON Data from TXT:', jsonData);
+				} catch (error) {
+					Swal.fire({
+						icon: 'error',
+						title: 'Invalid File',
+						text: 'The file could not be converted to JSON. Please check the format.',
+					});
+				}
+			};
+			reader.readAsText(selectedFile);
+		} else if(selectedFile && selectedFile.type === 'application/json') {
+			const reader = new FileReader();
+			reader.onload = () => {
+				try {
+					const jsonData = JSON.parse(reader.result as string);
+					setJsonData(jsonData);
+					console.log('Parsed JSON Data:', jsonData);
+				} catch (error) {
+					Swal.fire({
+						icon: 'error',
+						title: 'Invalid JSON File',
+						text: 'The file could not be parsed. Please check the format.',
+					});
+				}
+			};
+			reader.readAsText(selectedFile);
+		}
+		else {
+			Swal.fire({
+				icon: 'error',
+				title: 'Invalid File Type',
+				text: 'Please upload a text file.',
+			});
+		}
+    };
+	const txtToJson = (text: string) => {
+		// Split the text into lines
+		const lines = text.split('\n').filter(line=>line.trim()!=='');
+		const links = lines.map(line => {
+			// Split each line by comma and trim spaces
+			const [long_url, title, stub] = line.split(',').map(value => value.trim());
+			if(!long_url || !title) {
+				throw new Error('Invalid file format');
+			};
+			// Create JSON object for each line
+			return {
+				long_url,
+				title,
+				stub:'stub'
+				// createShortlink() // Use a function to generate stub if missing
+			};
+		});
+	
+		return { links };
+	};
+	
+    const handleBulkSubmit = async () => {
+		if(!jsonData){
+			Swal.fire({
+				icon: 'error',
+				title: 'Invalid File',
+				text: 'Please upload a valid file.',
+			});
+			return;
+		}
+		setIsLoading(true);
+
+		try {
+			// Send the JSON data to the backend
+			await http.post(`http://localhost:5001/links/create_bulk?user_id=${user_id}`, jsonData, {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+	
+			Swal.fire({
+				icon: 'success',
+				title: 'Links Created Successfully!',
+				text: 'You have successfully created multiple short links',
+				confirmButtonColor: '#221daf',
+			}).then(() => {
+				window.location.reload();
+			});
+		} catch (error) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Bulk Link Creation Failed!',
+				text: 'An error occurred, please try again',
+				confirmButtonColor: '#221daf',
+			});
+		} finally {
+			setIsLoading(false);
+			setOpenedBulkCreateLink(false);
+		}
+	};
+	
+	    return (
+        <Drawer
+            title="Bulk Create Short URLs"
+            placement="right"
+            onClose={() => setOpenedBulkCreateLink(false)}
+            open={openedBulkCreateLink}
+        >
+            <div>
+			<p><strong>Allowed File Types:</strong> JSON or TXT</p>
+				<p><strong>JSON Format:</strong></p>
+				<pre>{`{
+    "links": [
+        {
+            "long_url": "https://anotherexample2.com",
+            "title": "Example 1"
+        },
+        ...
+    ]
+}`}</pre>
+
+				<p><strong>TXT Format:</strong></p>
+				<pre>{`https://exampl111e.com,Example Title 111
+https://anotherexample11111111.com,Another1 Example
+https://yetanotherexample11111.com,Yet Another1111 Example`}</pre>
+
+				<input type="file" onChange={handleFileChange} accept=".json,.txt" />
+
+				<Button
+								size={'large'}
+								onClick={handleBulkSubmit}
+								type="primary"
+								disabled={isLoading}
+								loading={isLoading}
+							>
+								Submit
+							</Button>
+            </div>
+        </Drawer>
+    );
 };

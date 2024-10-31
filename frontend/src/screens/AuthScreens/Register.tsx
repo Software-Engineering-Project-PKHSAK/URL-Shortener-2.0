@@ -45,7 +45,7 @@ const Register = () => {
     setIsSubmitting(true);
 
     await http
-      .post("/auth/register", payload)
+      .post("http://localhost:5002/auth/register", payload)
       .then((res) => {
         Swal.fire({
           icon: 'success',

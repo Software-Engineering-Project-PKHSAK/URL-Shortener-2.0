@@ -24,7 +24,7 @@
 
 
 from operator import and_
-from flask import Blueprint, jsonify               #import dependancies
+from flask import Blueprint, jsonify,redirect                #import dependancies
 from flask_cors import cross_origin
 from string import ascii_letters, digits
 from flask import request
@@ -149,8 +149,8 @@ def create():
         utm_content=data.get('utm_content')
         password_hash=data.get('password_hash') 
         expire_on=data.get('expire_on')
-
-        link = Link(user_id=user_id, stub=stub, long_url=long_url, title=title, disabled=disabled, utm_source=utm_source, utm_medium=utm_medium,utm_campaign=utm_campaign, utm_term=utm_term, utm_content=utm_content, password_hash=password_hash, expire_on=expire_on)
+        max_visits=data.get('max_visits') #optional
+        link = Link(user_id=user_id, stub=stub, long_url=long_url, title=title, disabled=disabled, utm_source=utm_source, utm_medium=utm_medium,utm_campaign=utm_campaign, utm_term=utm_term, utm_content=utm_content, password_hash=password_hash, expire_on=expire_on, max_visits=max_visits)
         link.user_id = user_id
         db.session.add(link)
         db.session.commit()
@@ -339,3 +339,122 @@ def create_engagement(link_id):
             message = f'Create Engagement Failed {e}',
             status = 400
         ), 400
+
+import random
+import string
+
+def create_unique_stub():
+    """Generates a unique stub that does not already exist in the database."""
+    while True:
+        stub = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+        # Check if this stub already exists in the database
+        existing_stub = Link.query.filter_by(stub=stub).first()
+        if not existing_stub:
+            return stub
+
+
+import json
+
+@links_bp.route('/links/create_bulk', methods=['POST'])
+@login_required2()
+@cross_origin(supports_credentials=True)
+def create_bulk():
+    '''This method allows users to create multiple links in one request.'''
+    user_id = request.args.get('user_id')
+    print(user_id)
+    try:
+        data = request.get_json()
+        # file = request.files.get('file')
+        # if not file:
+        #     return jsonify(message='No file provided', status=400), 400
+        # data = json.load(file)
+        print(data);
+        # links_data = data['links']
+        links_data = data.get('links', [])
+        # print('linksssss',links_data);
+        if not links_data:
+            return jsonify(message='No links data found in the uploaded file', status=400), 400
+        created_links = []
+
+        for link_data in links_data:
+            # Extract link details and set defaults
+            long_url = link_data['long_url']
+            print('url',long_url)
+            stub = create_unique_stub()
+            print('stub',stub)
+            title = link_data.get('title')
+            disabled = link_data.get('disabled', False)
+            utm_source = link_data.get('utm_source')
+            utm_medium = link_data.get('utm_medium')
+            utm_campaign = link_data.get('utm_campaign')
+            utm_term = link_data.get('utm_term')
+            utm_content = link_data.get('utm_content')
+            password_hash = link_data.get('password_hash') 
+            expire_on = link_data.get('expire_on')
+
+            if not long_url or not title:
+                print('long url and title are required')
+                return jsonify(message='Long URL and title are required for each link', status=400), 400
+            
+            # Create Link instance
+            link = Link(
+                user_id=user_id, stub=stub, long_url=long_url, title=title,
+                disabled=disabled, utm_source=utm_source, utm_medium=utm_medium,
+                utm_campaign=utm_campaign, utm_term=utm_term, utm_content=utm_content,
+                password_hash=password_hash, expire_on=expire_on
+            )
+            print('------------------------')
+            db.session.add(link)
+            print('------------------------')
+            created_links.append(link)
+            print('------------------------')
+
+        # Commit all links at once
+        db.session.commit()
+        
+        # Return success with all created links' info
+        return jsonify(
+            links=[link.to_json() for link in created_links],
+            message='Bulk link creation successful',
+            status=201
+        ), 201
+        
+    except Exception as e:
+        return jsonify(
+            message=f'Bulk link creation failed: {e}',
+            status=400
+        ), 400
+
+@links_bp.route('/<stub>', methods=['GET'])
+def redirect_stub(stub):
+    """Redirects the short URL stub to its corresponding long URL."""
+    try:
+        # Look for the stub in the registered users' links
+        link = Link.query.filter_by(stub=stub).first()
+
+        if link:
+            if link.disabled:
+                return jsonify(message="This link has been disabled.", status=403), 403
+            elif link.max_visits and link.visit_count >= link.max_visits:
+                # Automatically disable the link if it has reached the maximum number of visits
+                link.disabled = True
+                db.session.commit()
+                return jsonify(message="This link has been disabled.", status=403), 403
+            
+            # Increment the visit count
+            link.visit_count += 1
+            db.session.commit()
+            return redirect(link.long_url)
+        else:
+            # Stub not found in user links, you might want to check in anonymous links
+            anon_link = AnonymousLink.query.filter_by(stub=stub).first()
+            if anon_link:
+                return redirect(anon_link.long_url)
+            else:
+                return jsonify(message="Link not found.", status=404), 404
+                
+    except Exception as e:
+        return jsonify(
+            message=f"An error occurred: {e}",
+            status=500
+        ), 500

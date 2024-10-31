@@ -149,8 +149,8 @@ def create():
         utm_content=data.get('utm_content')
         password_hash=data.get('password_hash') 
         expire_on=data.get('expire_on')
-
-        link = Link(user_id=user_id, stub=stub, long_url=long_url, title=title, disabled=disabled, utm_source=utm_source, utm_medium=utm_medium,utm_campaign=utm_campaign, utm_term=utm_term, utm_content=utm_content, password_hash=password_hash, expire_on=expire_on)
+        max_visits=data.get('max_visits') #optional
+        link = Link(user_id=user_id, stub=stub, long_url=long_url, title=title, disabled=disabled, utm_source=utm_source, utm_medium=utm_medium,utm_campaign=utm_campaign, utm_term=utm_term, utm_content=utm_content, password_hash=password_hash, expire_on=expire_on, max_visits=max_visits)
         link.user_id = user_id
         db.session.add(link)
         db.session.commit()
@@ -435,14 +435,14 @@ def redirect_stub(stub):
         if link:
             if link.disabled:
                 return jsonify(message="This link has been disabled.", status=403), 403
-            # elif link.max_visits and link.visit_count >= link.max_visits:
-            #     # Automatically disable the link if it has reached the maximum number of visits
-            #     link.disabled = True
-            #     db.session.commit()
-            #     return jsonify(message="This link has been disabled.", status=403), 403
+            elif link.max_visits and link.visit_count >= link.max_visits:
+                # Automatically disable the link if it has reached the maximum number of visits
+                link.disabled = True
+                db.session.commit()
+                return jsonify(message="This link has been disabled.", status=403), 403
             
             # Increment the visit count
-            # link.visit_count += 1
+            link.visit_count += 1
             db.session.commit()
             return redirect(link.long_url)
         else:

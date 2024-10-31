@@ -235,6 +235,7 @@ const CreateLinkDrawer = ({ openedCreateLink, setOpenedCreateLink }: any) => {
 		utm_medium: null,
 		utm_source: null,
 		utm_term: null,
+		max_visits: null,
 	});
 
 	const handleChange = (propertyName: string, e: any) => {
@@ -300,9 +301,19 @@ const CreateLinkDrawer = ({ openedCreateLink, setOpenedCreateLink }: any) => {
 						<Input onChange={(e) => handleChange('long_url', e)} size="large" />
 					</div>
 					<div className="form-group">
+					<label>Max Visits (optional)</label>
+									<Input
+										type="number"
+										min="1"
+										placeholder="Enter maximum number of visits"
+										onChange={(e) => handleChange('max_visits', e)}
+										size="large"
+									/>
+					</div>
+					{/* <div className="form-group">
 						<label>Custom end-link (optional)</label>
 						<Input onChange={(e) => handleChange('stub', e)} size="large" />
-					</div>
+					</div> */}
 					<div className="form-group">
 						<span style={{ marginRight: '10px' }}>Enabled?</span>
 						<Switch defaultChecked onChange={handleSwitchChange} />
@@ -533,7 +544,7 @@ const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
 };
 
 const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
-	const { id, title, stub, long_url, created_on, disabled } = item || {};
+	const { id, title, stub, long_url, created_on, disabled,max_visits=Infinity,visit_count=0} = item || {};
 
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -541,7 +552,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 	let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
 
 	const handleCopy = async () => {
-		const text = `http://localhost:5002/${stub}`;
+		const text = `http://localhost:5001/${stub}`;
 		if ('clipboard' in navigator) {
 			await navigator.clipboard.writeText(text);
 		} else {
@@ -557,21 +568,21 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 		});
 	};
 
-  const downloadQRCode = () => {
-    // Generate download with use canvas and stream
-    const canvas = document.getElementById("qr-gen") as HTMLCanvasElement;;
-    if (canvas) {
-      const pngUrl = canvas
-        .toDataURL("image/png")
-        .replace("image/png", "image/octet-stream");
-      let downloadLink = document.createElement("a");
-      downloadLink.href = pngUrl;
-      downloadLink.download = `qrcode.png`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    }
-  };
+//   const downloadQRCode = () => {
+//     // Generate download with use canvas and stream
+//     const canvas = document.getElementById("qr-gen") as HTMLCanvasElement;;
+//     if (canvas) {
+//       const pngUrl = canvas
+//         .toDataURL("image/png")
+//         .replace("image/png", "image/octet-stream");
+//       let downloadLink = document.createElement("a");
+//       downloadLink.href = pngUrl;
+//       downloadLink.download = `qrcode.png`;
+//       document.body.appendChild(downloadLink);
+//       downloadLink.click();
+//       document.body.removeChild(downloadLink);
+//     }
+//   };
 
 	const handleDisableEnableLink = async (e: any) => {
 		e.preventDefault();
@@ -606,11 +617,11 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 
 	const handleDeleteLink = async (e: any) => {
 		e.preventDefault();
-		const payload = {
-			// ...item,
-			long_url,
-			disabled: !disabled,
-		};
+		// const payload = {
+		// 	// ...item,
+		// 	long_url,
+		// 	disabled: !disabled,
+		// };
 
     setIsDeleting(true);
 		await http
@@ -636,7 +647,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
         setIsDeleting(false);
 			});
 	};
-
+	const isExpired = visit_count >= max_visits;
 	return (
 		<div className="link-card">
 			<div className="d-flex justify-content-between">
@@ -659,32 +670,36 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 				<b>Original URL:</b> {long_url}
 			</p>
 			<div className="btn-pane">
-				<button className="btn btn-outline-dark" onClick={() => setOpenedViewLink(item)}>
-					<i className="fa-solid fa-eye"></i> View Engagements Analytics
-				</button>
-				<button
-					className={`btn ${!disabled ? 'btn-outline-danger' : 'btn-outline-success'}`}
-					onClick={handleDisableEnableLink}
-				>
-					{!disabled ? <i className="fa-solid fa-link-slash"></i> : <i className="fa-solid fa-link"></i>}
-					{!disabled ? 'Disable Link' : 'Enable Link'}
-				</button>
-        <button className='btn btn-outline-dark'  onClick={downloadQRCode}>
+			{isExpired? (
+                    <p style={{ color: 'red' }}>
+                        <b>This link has expired due to reaching maximum visits.</b>
+                    </p>
+                ) : (
+					<>
+                    <button className="btn btn-outline-dark" onClick={() => setOpenedViewLink(item)}>
+                        <i className="fa-solid fa-eye"></i> View Engagements Analytics
+                    </button>
+					<button className="btn btn-outline-primary" onClick={() => setOpenedLink(item)}>
+                    <i className="fa-solid fa-pen-to-square"></i> Edit
+                </button>
+				</>
+                )}
+                
+                <Popconfirm
+                    title="Are you sure?"
+                    icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+                    onConfirm={handleDeleteLink}
+                >
+                    <button className="btn btn-outline-danger">
+                        <i className="fa-solid fa-trash"></i> {isDeleting ? 'Deleting' : 'Delete'}
+                    </button>
+                </Popconfirm>
+            </div>
+        {/* <button className='btn btn-outline-dark'  onClick={downloadQRCode}>
           <i className="fa-solid fa-download"></i>
           Download QR Code
-        </button>
-				<button className="btn btn-outline-primary" onClick={() => setOpenedLink(item)}>
-					<i className="fa-solid fa-pen-to-square"></i> Edit
-				</button>
-				<Popconfirm
-					title="Are you sure？"
-					icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-					onConfirm={handleDeleteLink}
-				>
-					<button className="btn btn-outline-danger">
-						<i className="fa-solid fa-trash"></i> {isDeleting ? 'Deleting' : 'Delete'}
-					</button>
-				</Popconfirm>
+        </button> */}
+			
         <div style={{display: 'none'}}>
           <QRCode
             id="qr-gen"
@@ -695,7 +710,6 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
           />
         </div>
 			</div>
-		</div>
 	);
 };
 

@@ -20,10 +20,10 @@ const Sidebar = ({ isDashboard }: any) => {
           }
 				</Link>
 				<div className="spacebar" />
-				<MenuItem routerLink={<Link to="/overview" />} active={isActivePath('/overview')} icon={<i className="fa-solid fa-gauge"></i> }>
+				<MenuItem component={<Link to="/overview" />} active={isActivePath('/overview')} icon={<i className="fa-solid fa-gauge"></i> }>
 					Overview
 				</MenuItem>
-				<MenuItem routerLink={<Link to="/account-settings" />} active={isActivePath('/account-settings')} icon={<i className="fa-solid fa-gear"></i>}>
+				<MenuItem component={<Link to="/account-settings" />} active={isActivePath('/account-settings')} icon={<i className="fa-solid fa-gear"></i>}>
 					Account Settings
 				</MenuItem>
 			</Menu>

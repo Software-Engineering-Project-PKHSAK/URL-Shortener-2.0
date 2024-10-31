@@ -35,7 +35,7 @@ const Dashboard = () => {
 		// setIsLoading(true);
 
 		await http
-			.get(`/links/stats?user_id=${user_id}`)
+		    .get(`http://localhost:5002/links/stats?user_id=${user_id}`)
 			.then((res) => {
 				const { links } = res.data;
 				// setIsLoading(false);
@@ -50,7 +50,7 @@ const Dashboard = () => {
 		setIsLoading(true);
 
 		await http
-			.get(`/links/all?user_id=${user_id}`)
+		    .get(`http://localhost:5002/links/all?user_id=${user_id}`)
 			.then((res) => {
 				const { links } = res.data;
 				setIsLoading(false);
@@ -171,7 +171,7 @@ const ViewLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
 	const fetchLink = async () => {
 		setIsLoading(true);
 		await http
-			.get(`/links/${id}`, payload)
+	        .get(`http://localhost:5002/links/${id}`, payload)
 			.then((res) => {
 				setIsLoading(false);
 			})
@@ -183,7 +183,7 @@ const ViewLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
   const fetchLinkEngagements = async () => {
 		setIsLoading(true);
 		await http
-			.get(`/links/${id}/engagements?user_id=${user_id}`, payload)
+		    .get(`http://localhost:5002/links/${id}/engagements?user_id=${user_id}`, payload)
 			.then((res) => {
         const _engagements = res.data?.engagements
 				setIsLoading(false);
@@ -251,7 +251,7 @@ const CreateLinkDrawer = ({ openedCreateLink, setOpenedCreateLink }: any) => {
 		setIsLoading(true);
 		// console.log(payload);
 		await http
-			.post(`/links/create?user_id=${user_id}`, payload)
+		    .post(`http://localhost:5002/links/create?user_id=${user_id}`, payload)
 			.then((res) => {
 				Swal.fire({
 					icon: 'success',
@@ -399,7 +399,7 @@ const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
 	const fetchLink = async () => {
 		setIsLoading(true);
 		await http
-			.get(`/links/${id}`, payload)
+		    .get(`http://localhost:5002/links/${id}`, payload)
 			.then((res) => {
 				setIsLoading(false);
 			})
@@ -414,7 +414,7 @@ const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
       delete payload.stub;
     }
 		await http
-			.patch(`/links/update/${id}?user_id=${user_id}`, payload)
+		    .patch(`http://localhost:5002/links/update/${id}?user_id=${user_id}`, payload)
 			.then((res) => {
 				Swal.fire({
 					icon: 'success',
@@ -533,7 +533,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 	let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
 
 	const handleCopy = async () => {
-		const text = `url-bit.web.app/${stub}`;
+		const text = `http://localhost:5002/${stub}`;
 		if ('clipboard' in navigator) {
 			await navigator.clipboard.writeText(text);
 		} else {
@@ -574,7 +574,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 		};
 
 		await http
-			.patch(`/links/update/${id}?user_id=${user_id}`, payload)
+		    .patch(`http://localhost:5002/links/update/${id}?user_id=${user_id}`, payload)
 			.then((res) => {
 				const { id } = res.data;
 				Swal.fire({
@@ -606,7 +606,7 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 
     setIsDeleting(true);
 		await http
-			.delete(`/links/delete/be70a7ee-a918-4162-895e-5618b9fca387?user_id=${user_id}`)
+		    .delete(`http://localhost:5002/links/delete/${id}?user_id=${user_id}`)
 			.then((res) => {
 				Swal.fire({
 					icon: 'success',

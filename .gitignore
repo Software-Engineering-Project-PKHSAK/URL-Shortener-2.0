@@ -5,5 +5,6 @@
 /frontend/public/main.js
 /frontend/package-lock.json
 /yarn.lock
-
+/backend/env
+/backend/.env
 .DS_Store

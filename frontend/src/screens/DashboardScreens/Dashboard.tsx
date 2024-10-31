@@ -21,6 +21,7 @@ const Dashboard = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [statsData, setStatsData] = useState<any>(null);
 	const [linksData, setLinksData] = useState<any[]>([]);
+	const [openedBulkCreateLink, setOpenedBulkCreateLink] = useState<boolean>(false);
 
 	const URLshortenerUser = window.localStorage.getItem('URLshortenerUser');
 	let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
@@ -103,6 +104,9 @@ const Dashboard = () => {
 								<button className="btn btn-main" onClick={() => setOpenedCreateLink(true)}>
 									Shorten Link
 								</button>
+								<button className="btn btn-main" onClick={() => setOpenedBulkCreateLink(true)}>
+                                        Bulk Shorten Links
+                                </button>
 							</div>
 						</div>
 					</div>
@@ -145,6 +149,10 @@ const Dashboard = () => {
 			<ViewLinkDrawer openedLink={openedViewLink} setOpenedLink={setOpenedViewLink} />
 			<UpdateLinkDrawer openedLink={openedLink} setOpenedLink={setOpenedLink} />
 			<CreateLinkDrawer openedCreateLink={openedCreateLink} setOpenedCreateLink={setOpenedCreateLink} />
+			<BulkCreateLinkDrawer 
+    openedBulkCreateLink={openedBulkCreateLink} 
+    setOpenedBulkCreateLink={setOpenedBulkCreateLink} 
+/>
 		</div>
 	);
 };
@@ -689,4 +697,138 @@ const LinkCardItem = ({ setOpenedLink, setOpenedViewLink, item }: any) => {
 			</div>
 		</div>
 	);
+};
+
+const BulkCreateLinkDrawer = ({ openedBulkCreateLink, setOpenedBulkCreateLink }: any) => {
+
+	const URLshortenerUser = window.localStorage.getItem('URLshortenerUser');
+	let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
+    const [file, setFile] = useState<File | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+	const [jsonData, setJsonData] = useState<any>(null);
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files?.[0];
+		console.log('Selected file:', selectedFile); // Check if file is selected
+		if(!selectedFile) return;
+		setFile(selectedFile);
+        if (selectedFile && selectedFile.type === 'text/plain') {
+			const reader = new FileReader();
+			reader.onload = () => {
+				try {
+					const textContent = reader.result as string;
+					// Convert TXT content to JSON
+					const jsonData = txtToJson(textContent);
+					// Send the converted JSON to the backend
+					setJsonData(jsonData);
+					console.log('Converted JSON Data from TXT:', jsonData);
+				} catch (error) {
+					Swal.fire({
+						icon: 'error',
+						title: 'Invalid File',
+						text: 'The file could not be converted to JSON. Please check the format.',
+					});
+				}
+			};
+			reader.readAsText(selectedFile);
+		} else if(selectedFile && selectedFile.type === 'application/json') {
+			const reader = new FileReader();
+			reader.onload = () => {
+				try {
+					const jsonData = JSON.parse(reader.result as string);
+					setJsonData(jsonData);
+					console.log('Parsed JSON Data:', jsonData);
+				} catch (error) {
+					Swal.fire({
+						icon: 'error',
+						title: 'Invalid JSON File',
+						text: 'The file could not be parsed. Please check the format.',
+					});
+				}
+			};
+			reader.readAsText(selectedFile);
+		}
+		else {
+			Swal.fire({
+				icon: 'error',
+				title: 'Invalid File Type',
+				text: 'Please upload a text file.',
+			});
+		}
+    };
+	const txtToJson = (text: string) => {
+		// Split the text into lines
+		const lines = text.split('\n').filter(line=>line.trim()!=='');
+		const links = lines.map(line => {
+			// Split each line by comma and trim spaces
+			const [long_url, title, stub] = line.split(',').map(value => value.trim());
+			if(!long_url || !title) {
+				throw new Error('Invalid file format');
+			};
+			// Create JSON object for each line
+			return {
+				long_url,
+				title,
+				stub:'stub'
+				// createShortlink() // Use a function to generate stub if missing
+			};
+		});
+	
+		return { links };
+	};
+	
+    const handleBulkSubmit = async () => {
+		if(!jsonData){
+			Swal.fire({
+				icon: 'error',
+				title: 'Invalid File',
+				text: 'Please upload a valid file.',
+			});
+			return;
+		}
+		setIsLoading(true);
+
+		try {
+			// Send the JSON data to the backend
+			await http.post(`http://localhost:5001/links/create_bulk?user_id=${user_id}`, jsonData, {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+	
+			Swal.fire({
+				icon: 'success',
+				title: 'Links Created Successfully!',
+				text: 'You have successfully created multiple short links',
+				confirmButtonColor: '#221daf',
+			}).then(() => {
+				window.location.reload();
+			});
+		} catch (error) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Bulk Link Creation Failed!',
+				text: 'An error occurred, please try again',
+				confirmButtonColor: '#221daf',
+			});
+		} finally {
+			setIsLoading(false);
+			setOpenedBulkCreateLink(false);
+		}
+	};
+	
+    return (
+        <Drawer
+            title="Bulk Create Short URLs"
+            placement="right"
+            onClose={() => setOpenedBulkCreateLink(false)}
+            open={openedBulkCreateLink}
+        >
+            <div>
+                <input type="file" onChange={handleFileChange} />
+                <Button onClick={handleBulkSubmit} disabled={isLoading} loading={isLoading}>
+                    Submit
+                </Button>
+            </div>
+        </Drawer>
+    );
 };

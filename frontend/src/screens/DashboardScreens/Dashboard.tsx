@@ -123,7 +123,7 @@ const Dashboard = () => {
               ? "An error occurred while fetching links"
               : linkData?.links?.length === 0
               ? "No links created yet"
-              : linkData?.link
+              : linkData?.links
                   ?.sort((a: any, b: any) =>
                     moment(b.created_on).diff(moment(a.created_on))
                   )

@@ -138,63 +138,67 @@ export const LinkCardItem = ({
           </p>
         </div>
       </div>
-      <div className="url-pane">
-        <a
-          href={`http://localhost:5002/${stub}`}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <p>{`${process.env.REACT_APP_API_BASE_URL}/${stub}`}</p>
-        </a>
-        <i
-          onClick={handleCopy}
-          style={{ cursor: "pointer" }}
-          className="fa-solid fa-copy"
-        ></i>
-      </div>
-      <p style={{ overflowWrap: "break-word" }}>
-        <b>Original URL:</b> {long_url}
-      </p>
-      <div className="btn-pane">
-        {isExpired ? (
-          <p style={{ color: "red" }}>
-            <b>This link has expired due to reaching maximum visits.</b>
+      <div className="d-flex justify-content-between align-items-center">
+        <div>
+          <div className="url-pane">
+            <a
+              href={`http://localhost:5002/${stub}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <p>{`${process.env.REACT_APP_API_BASE_URL}/${stub}`}</p>
+            </a>
+            <i
+              onClick={handleCopy}
+              style={{ cursor: "pointer" }}
+              className="fa-solid fa-copy"
+            ></i>
+          </div>
+          <p style={{ overflowWrap: "break-word" }}>
+            <b>Original URL:</b> {long_url}
           </p>
-        ) : (
-          <>
-            <button
-              className="btn btn-outline-dark"
-              onClick={() => setOpenedViewLink(item)}
-            >
-              <i className="fa-solid fa-eye"></i> View Engagements Analytics
-            </button>
-            <button
-              className="btn btn-outline-primary"
-              onClick={() => setOpenedLink(item)}
-            >
-              <i className="fa-solid fa-pen-to-square"></i> Edit
-            </button>
-          </>
-        )}
+          <div className="btn-pane">
+            {isExpired ? (
+              <p style={{ color: "red" }}>
+                <b>This link has expired due to reaching maximum visits.</b>
+              </p>
+            ) : (
+              <>
+                <button
+                  className="btn btn-outline-dark"
+                  onClick={() => setOpenedViewLink(item)}
+                >
+                  <i className="fa-solid fa-eye"></i> View Engagements Analytics
+                </button>
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={() => setOpenedLink(item)}
+                >
+                  <i className="fa-solid fa-pen-to-square"></i> Edit
+                </button>
+              </>
+            )}
 
-        <Popconfirm
-          title="Are you sure?"
-          icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-          onConfirm={() => {}}
-        >
-          <button className="btn btn-outline-danger">
-            <i className="fa-solid fa-trash"></i>{" "}
-            {isDeleting ? "Deleting" : "Delete"}
-          </button>
-        </Popconfirm>
+            <Popconfirm
+              title="Are you sure?"
+              icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+              onConfirm={() => {}}
+            >
+              <button className="btn btn-outline-danger">
+                <i className="fa-solid fa-trash"></i>{" "}
+                {isDeleting ? "Deleting" : "Delete"}
+              </button>
+            </Popconfirm>
+          </div>
+        </div>
+        <div>
+          <QRCode id="qr-gen" value={long_url} size={100} level={"H"} />
+        </div>
       </div>
       {/* <button className='btn btn-outline-dark'  onClick={downloadQRCode}>
             <i className="fa-solid fa-download"></i>
             Download QR Code
           </button> */}
-      <div style={{ display: "none" }}>
-        <QRCode id="qr-gen" value={long_url} size={290} level={"H"} />
-      </div>
     </div>
   );
 };

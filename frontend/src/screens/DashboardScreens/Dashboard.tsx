@@ -1,9 +1,5 @@
-import Swal from "sweetalert2";
-import { Collapse, Popconfirm } from "antd";
 import { useState } from "react";
-import http from "utils/api";
 import moment from "moment";
-import { QuestionCircleOutlined } from "@ant-design/icons";
 import "./styles.scss";
 import toast, { Toaster } from "react-hot-toast";
 import QRCode from "qrcode.react";
@@ -28,8 +24,6 @@ const Dashboard = () => {
   const [openedLink, setOpenedLink] = useState<any | null>(null);
   const [openedViewLink, setOpenedViewLink] = useState<any | null>(null);
   const [openedCreateLink, setOpenedCreateLink] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [statsData, setStatsData] = useState<any>(statData);
   const [openedBulkCreateLink, setOpenedBulkCreateLink] =
     useState<boolean>(false);
 
@@ -39,7 +33,7 @@ const Dashboard = () => {
     (URLshortenerUser && JSON.parse(URLshortenerUser).first_name) || {};
 
   const { total_count, total_disabled, total_enabled, total_engagements } =
-    statsData || {};
+    statData?.links || {};
 
   const stats = [
     {

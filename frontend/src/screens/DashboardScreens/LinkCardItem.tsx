@@ -1,4 +1,4 @@
-import { Popconfirm } from "antd";
+import { Popconfirm, Tag } from "antd";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import QRCode from "react-qr-code";
@@ -19,6 +19,7 @@ export const LinkCardItem = ({
     disabled,
     max_visits = Infinity,
     visit_count = 0,
+    tags,
   } = item || {};
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -142,7 +143,7 @@ export const LinkCardItem = ({
         <div>
           <div className="url-pane">
             <a
-              href={`http://localhost:5002/${stub}`}
+              href={`${process.env.REACT_APP_API_BASE_URL}/${stub}`}
               rel="noreferrer"
               target="_blank"
             >
@@ -178,7 +179,6 @@ export const LinkCardItem = ({
                 </button>
               </>
             )}
-
             <Popconfirm
               title="Are you sure?"
               icon={<QuestionCircleOutlined style={{ color: "red" }} />}
@@ -195,6 +195,18 @@ export const LinkCardItem = ({
           <QRCode id="qr-gen" value={long_url} size={100} level={"H"} />
         </div>
       </div>
+      {tags.length > 0 && (
+        <div style={{ marginTop: 8 }} className="d-flex">
+          <p style={{ fontWeight: "bold", marginRight: 4 }}>Tags: </p>
+          {tags.map((tag: any) => {
+            return (
+              <Tag className="link-tag" style={{ fontWeight: "bold" }}>
+                {tag}
+              </Tag>
+            );
+          })}
+        </div>
+      )}
       {/* <button className='btn btn-outline-dark'  onClick={downloadQRCode}>
             <i className="fa-solid fa-download"></i>
             Download QR Code

@@ -60,6 +60,7 @@ def create_link_object(user_id, data, is_anonymous=False):
                 "password_hash": data.get("password_hash"),
                 "expire_on": data.get("expire_on"),
                 "max_visits": data.get("max_visits"),
+                "tags": data.get("tags"),
             }
         )
 

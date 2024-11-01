@@ -10,7 +10,6 @@ import {
   Typography
 } from "antd";
 import { useCreateLink } from "api/createLink";
-import { useFetchLinksByTags } from "api/fetchLinksByTags";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -39,8 +38,6 @@ export const CreateLinkDrawer = ({
     tags:[]
   });
   const createLinkMutation = useCreateLink();
-  const { data: any } = useFetchLinksByTags(payload.tags);
-
   const handleChange = (propertyName: string, e: any) => {
     const _payload = { ...payload };
     _payload[propertyName] = e.target.value;

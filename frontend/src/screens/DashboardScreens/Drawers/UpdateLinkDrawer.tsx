@@ -7,12 +7,16 @@ import {
   Input,
   Space,
   Switch,
+  List,
+  Typography,
 } from "antd";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { useUpdateLink } from "api/updateLink";
+import { useFetchLinksByTags } from "api/fetchLinksByTags";
 
 const { Panel } = Collapse;
+const { Title } = Typography;
 
 export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
   const { id } = openedLink || {};
@@ -36,6 +40,11 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
   const handleSwitchChange = (checked: boolean) => {
     const _payload = { ...payload };
     _payload["disabled"] = !checked;
+    setPayload(_payload);
+  };
+  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tags = e.target.value.split(',').map(tag => tag.trim());
+    const _payload = { ...payload, tags };
     setPayload(_payload);
   };
 
@@ -105,6 +114,15 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
                 value={payload?.stub}
                 onChange={(e) => handleChange("stub", e)}
                 size="large"
+              />
+            </div>
+            <div className="form-group">
+              <label>Tags (comma-separated)</label>
+              <Input
+                value={payload?.tags?.join(', ') || ''}
+                onChange={handleTagsChange}
+                size="large"
+                placeholder="Enter tags separated by commas"
               />
             </div>
             <div className="form-group">

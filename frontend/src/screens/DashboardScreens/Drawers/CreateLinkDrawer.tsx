@@ -6,12 +6,16 @@ import {
   Input,
   Space,
   Switch,
+  List,
+  Typography
 } from "antd";
 import { useCreateLink } from "api/createLink";
+import { useFetchLinksByTags } from "api/fetchLinksByTags";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
 const { Panel } = Collapse;
+const { Title } = Typography;
 
 export const CreateLinkDrawer = ({
   openedCreateLink,
@@ -32,8 +36,10 @@ export const CreateLinkDrawer = ({
     utm_source: null,
     utm_term: null,
     max_visits: null,
+    tags:[]
   });
   const createLinkMutation = useCreateLink();
+  const { data: any } = useFetchLinksByTags(payload.tags);
 
   const handleChange = (propertyName: string, e: any) => {
     const _payload = { ...payload };
@@ -50,6 +56,10 @@ export const CreateLinkDrawer = ({
   const handleSwitchChange = (checked: boolean) => {
     const _payload = { ...payload };
     _payload["disabled"] = !checked;
+    setPayload(_payload);
+  };
+  const handleTagsChange = (tags: string[]) => {
+    const _payload = { ...payload, tags };
     setPayload(_payload);
   };
 
@@ -93,6 +103,14 @@ export const CreateLinkDrawer = ({
           <div className="form-group">
             <label>Long URL *</label>
             <Input onChange={(e) => handleChange("long_url", e)} size="large" />
+          </div>
+          <div className="form-group">
+            <label>Tags (comma-separated)</label>
+            <Input
+              placeholder="Enter tags separated by commas"
+              onChange={(e) => handleTagsChange(e.target.value.split(","))}
+              size="large"
+            />
           </div>
           <div className="form-group">
             <label>Max Visits (optional)</label>

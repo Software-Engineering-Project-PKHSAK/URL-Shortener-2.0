@@ -60,7 +60,7 @@ def create_link_object(user_id, data, is_anonymous=False):
                 "password_hash": data.get("password_hash"),
                 "expire_on": data.get("expire_on"),
                 "max_visits": data.get("max_visits"),
-                "tags": data.get("tags"),
+                "tags": list(set(data.get("tags", [])))
             }
         )
 
@@ -87,7 +87,11 @@ def update_link_attributes(link, data):
 
     for field in updatable_fields:
         if field in data:
-            setattr(link, field, data[field])
+            if field == "tags":
+                print(list(set(data[field])))
+                setattr(link, field, list(set(data[field])))
+            else:
+                setattr(link, field, data[field])
 
 
 def get_user_links(user_id):

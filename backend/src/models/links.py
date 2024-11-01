@@ -45,8 +45,7 @@ class Link(db.Model):
     updated_on = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), nullable=False, server_onupdate=db.func.now())
     visit_count = db.Column(db.Integer, default=0)  # Current visit count
     max_visits = db.Column(db.Integer, default=999)  # Maximum number of visits before deactivation
-   
-    
+    tags = db.relationship('Tag', secondary='link_tags', back_populates='links')
 	# make a relationship with 'User' model
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('users.id'))
 
@@ -68,7 +67,8 @@ class Link(db.Model):
         'created_on':self.created_on, 
         'updated_on':self.updated_on,   
         'visit_count':self.visit_count,
-        'max_visits':self.max_visits
+        'max_visits':self.max_visits,
+        'tags': [tag.name for tag in self.tags]
     }
 
     def __repr__(self):

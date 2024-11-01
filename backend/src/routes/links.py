@@ -3,10 +3,10 @@ from operator import and_
 from flask import Blueprint, jsonify, redirect, request
 from flask_cors import cross_origin
 from string import ascii_letters, digits
-from models.links import Link, db, load_link
-from models.links_anonymous import AnonymousLink
-from models.user import User, login_required2
-from models.engagements import Engagements
+from ..models.links import Link, db, load_link
+from ..models.links_anonymous import AnonymousLink
+from ..models.user import User, login_required2
+from ..models.engagements import Engagements
 
 links_bp = Blueprint("links_bp", __name__)
 
@@ -81,6 +81,7 @@ def update_link_attributes(link, data):
         "password_hash",
         "expire_on",
         "max_visits",
+        "tags"
     ]
 
     for field in updatable_fields:
@@ -92,6 +93,12 @@ def get_user_links(user_id):
     """Fetches all links for a given user."""
     return db.session.query(Link).join(User).filter(User.id == user_id).all()
 
+def get_user_links_by_tags(user_id, tags):
+    """Fetches all links for a given user by tags."""
+    tag_conditions = [Link.tags.any(name=tag) for tag in tags]
+    return db.session.query(Link).join(User).filter(
+        and_(User.id == user_id, *tag_conditions)
+    ).all()
 
 def get_user_stats(user_id):
     """Fetches link statistics for a user."""
@@ -145,6 +152,22 @@ def get_link(id):
     except Exception as e:
         return jsonify(message=f"An error occurred: {str(e)}", status=400), 400
 
+@links_bp.route("/links/<tags>", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_link_by_tags(tags):
+    """Fetches a links by tags."""
+    try:
+        user_id = request.args.get("user_id")
+        if not user_id:
+            return jsonify(message="User ID is required", status=400), 400
+        links = get_user_links_by_tags(user_id, tags)
+        return jsonify(
+            links=[link.to_json() for link in links],
+            message="Fetching links successfully",
+            status=200,
+        ), 200
+    except Exception as e:
+        return jsonify(message=f"An error occurred: {str(e)}", status=400), 400
 
 @links_bp.route("/links/stub/<stub>", methods=["GET"])
 @cross_origin(supports_credentials=True)

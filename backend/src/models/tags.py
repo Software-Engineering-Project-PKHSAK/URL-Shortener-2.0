@@ -4,6 +4,7 @@ try:
 except ImportError:
 	from extensions import db
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 # Tag model to represent individual tags
 class Tag(db.Model):
@@ -13,7 +14,7 @@ class Tag(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False)
 
     # Establish many-to-many relationship with Link
-    links = db.relationship('Link', secondary='link_tags', back_populates='tags')
+    links = relationship('Link', secondary='link_tags', back_populates='tags')
 
     def __repr__(self):
         return f"<Tag {self.name}>"

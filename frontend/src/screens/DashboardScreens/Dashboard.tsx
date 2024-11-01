@@ -62,7 +62,6 @@ const Dashboard = () => {
       icon: <i className="fa-solid fa-eye"></i>,
     },
   ];
-
   return (
     <div className="dashboard-page dashboard-commons">
       <section>
@@ -122,9 +121,9 @@ const Dashboard = () => {
               ? "loading links"
               : linkDataError
               ? "An error occurred while fetching links"
-              : linkData?.length === 0
+              : linkData?.links?.length === 0
               ? "No links created yet"
-              : linkData
+              : linkData?.link
                   ?.sort((a: any, b: any) =>
                     moment(b.created_on).diff(moment(a.created_on))
                   )

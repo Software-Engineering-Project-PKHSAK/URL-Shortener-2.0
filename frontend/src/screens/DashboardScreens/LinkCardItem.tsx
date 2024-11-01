@@ -140,7 +140,7 @@ export const LinkCardItem = ({
       </div>
       <div className="url-pane">
         <a
-          href={`http://localhost:5002/${stub}`}
+          href={`${process.env.REACT_APP_API_BASE_URL}/${stub}`}
           rel="noreferrer"
           target="_blank"
         >

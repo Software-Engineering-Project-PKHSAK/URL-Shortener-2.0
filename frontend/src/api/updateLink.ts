@@ -8,7 +8,12 @@ export const useUpdateLink = () => {
       let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
       const response = await axios.patch(
         `${process.env.REACT_APP_API_BASE_URL}/links/update/${id}?user_id=${user_id}`,
-        payload
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     },

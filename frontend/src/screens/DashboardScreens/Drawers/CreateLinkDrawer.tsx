@@ -7,7 +7,7 @@ import {
   Space,
   Switch,
   List,
-  Typography
+  Typography,
 } from "antd";
 import { useCreateLink } from "api/createLink";
 import { useState } from "react";
@@ -35,7 +35,7 @@ export const CreateLinkDrawer = ({
     utm_source: null,
     utm_term: null,
     max_visits: null,
-    tags:[]
+    tags: [],
   });
   const createLinkMutation = useCreateLink();
   const handleChange = (propertyName: string, e: any) => {

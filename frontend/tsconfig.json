@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["jest", "node"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -16,8 +17,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "typeRoots": ["node_modules/@types"],
-    "types": ["jest", "node"]
+    "typeRoots": ["global.d.ts"]
   },
   "include": ["src", "global.d.ts", "src/**/*.test.ts", "src/**/*.test.tsx"]
 }

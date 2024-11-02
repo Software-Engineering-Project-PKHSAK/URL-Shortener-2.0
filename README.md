@@ -35,12 +35,10 @@
 
 
 ## Description
-Do you wish you could convert your long urls to a short and easy-to-remember custom one, and also track the number of visits, and be in total control of your links (e.g. password-protect, disable/enable, set expiry dates). Also do you wish to track engagements using UTM parameters, then URL Shortener 2.0. is that tool you need.
+Do you wish you could convert your long urls to a short and easy-to-remember custom one? With tools like tracking number of visits, password protecting links, bulk creation of links and easy filtering. Then URL-Shortner-3.0 is exactly what you need!
 
-## Watch URL-Shortener-2.0 in Action 
-Feature Delta (changes) between Phase One and Phase Two
-
-https://user-images.githubusercontent.com/17693596/205698074-88500484-e25a-44de-bebf-1c17ca358f13.mp4
+## Watch what makes URL-Shortener-3.0 amazing!
+VIDEO
 
 ## Tech Stack
 <a href="https://flask.palletsprojects.com/en/2.2.x/"><img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" /></a>
@@ -54,10 +52,6 @@ https://user-images.githubusercontent.com/17693596/205698074-88500484-e25a-44de-
 ## Getting started & Installation:
 - Backend [See README.md](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/backend/README.md)
 - Frontend [See README.md](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/frontend/README.md)
-
-## Demo Links
-- Backend Base API Endpoint URL: https://url-shortener-server-api.herokuapp.com/ Check out [Docs](https://splendid-crush-9a3.notion.site/API-Endpoints-58013a6640204491858ada2541ae623a)
-- Frontend Web App: https://url-bit.web.app/
 
 ## Some of our Current Screens
 <p>
@@ -89,18 +83,21 @@ https://user-images.githubusercontent.com/17693596/205698074-88500484-e25a-44de-
   <li>View overview stats of all your links in one place</li>
 </ul>
 
+## Phase 3 Features
+<ul>
+  <li>Bulk creation of links</li>
+  <li>Filter links based on tags</li>
+  <li>Create Short links with protection</li>
+  <li>Edit/Delete shortened links with their tags (from authenticated account)</li>
+  <li>Set expiry date for links based on number of visits</li>
+  <li>View analytics for your links</li>
+</ul>
+
 ## Future Scope
 <ul>
   <li>Display charts to show engagement analytics using UTM parameters</li>
-  <li>Bulk shortened links creation</li>
   <li>Country/Region targeting</li>
-  <li>Link expiration by number of visits</li>
-  <li>Tags for links to organize them in dashboard</li>
 </ul>
-
-## Scalability 
-[See here](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/docs/scalability.md)
-
 
 ## Contributions to the Project
 Please refer to the [Contributing.md](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/Contributing.md) if you want to contrbute to the FlashCards source code. Follow all the guidelines mentioned and raise a pull request for the developers to review before the code goes to the main source code.
@@ -108,13 +105,12 @@ Please refer to the [Contributing.md](https://github.com/JohnDamilola/URL-Shorte
 ## Help
 
 Email any queries to the contributors -
-1. [Swarangi Gaurkar](sgaurka@ncsu.edu)
-2. [Kritika Javali](ksjavali@ncsu.edu)
-3. [John Damilola](djbabalo@ncsu.edu)
-4. [Aaron Dias Barreto](aadiasba@ncsu.edu)
-5. [Leo Hsiang](yhsiang@ncsu.edu)
+1. [Bhavishya Tarun](btarun@ncsu.edu)
+2. [Archit Gupta](agupta85@ncsu.edu)
+3. [Vyom Patel](vbpatel3@ncsu.edu)
 
-## Authors 
+
+## Original Authors 
 
 1. [Kritika Javali](https://github.com/ksjavali)
 2. [Swarangi Gaurkar](https://github.com/Swarangigaurkar)

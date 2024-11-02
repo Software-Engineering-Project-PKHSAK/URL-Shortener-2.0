@@ -15,6 +15,12 @@ create database url_shortener;
 6. flask db migrate -m "initial migration"
 7. flask db upgrade
 
+### Local Flask
+
+8. flask run
+
+   OR
+
 ### Heroku setup
 8. git remote add heroku https://git.heroku.com/url-shortener-server-api.git
 

@@ -42,7 +42,7 @@ def create_link_object(user_id, data, is_anonymous=False):
     """Creates a Link or AnonymousLink instance from data."""
     LinkClass = AnonymousLink if is_anonymous else Link
     link_data = {
-        "stub": data.get("stub") or create_unique_stub(),
+        "stub": create_unique_stub(),
         "long_url": data["long_url"],
     }
 

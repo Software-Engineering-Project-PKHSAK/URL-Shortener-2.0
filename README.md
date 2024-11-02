@@ -25,6 +25,7 @@
 <img align="center" src="https://img.shields.io/badge/postgres-%23316192.svg?logo=postgresql&logoColor=white"/> </a>
 <img src="https://img.shields.io/badge/flask-%23000.svg?logo=flask&logoColor=white"/>
 <img src="https://img.shields.io/badge/react-%2320232a.svg?logo=react&logoColor=%2361DAFB"/>
+<a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/deno.yml"> <img src="https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white"/>
 </p>
 
 

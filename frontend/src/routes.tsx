@@ -1,45 +1,44 @@
-import Login from 'screens/AuthScreens/Login'
-import Register from 'screens/AuthScreens/Register'
-import Dashboard from 'screens/DashboardScreens/Dashboard'
-import Home from 'screens/Home'
-import Update_User from 'screens/DashboardScreens/EditUser'
-
+import Login from "screens/AuthScreens/Login";
+import Register from "screens/AuthScreens/Register";
+import Dashboard from "screens/DashboardScreens/Dashboard";
+import Home from "screens/Home";
+import EditUser from "screens/DashboardScreens/EditUser";
 
 const homeRoutes = [
   {
-    path: '/',
+    path: "/",
     element: <Home />,
-  }
-]
+  },
+];
 
 const authRoutes = [
   {
-    path: '/login',
+    path: "/login",
     element: <Login />,
   },
   {
-    path: '/register',
+    path: "/register",
     element: <Register />,
-  }
-]
+  },
+];
 
 const dashboardRoutes = [
   {
-    path: '/overview',
+    path: "/overview",
     element: <Dashboard />,
   },
   {
-    path: '/links',
+    path: "/links",
     element: <div>Links</div>,
   },
   {
-    path: '/analytics',
+    path: "/analytics",
     element: <div>Analytics</div>,
   },
   {
-    path: '/account-settings',
-    element: <Update_User />,
+    path: "/account-settings",
+    element: <EditUser />,
   },
-]
+];
 
-export { homeRoutes, authRoutes, dashboardRoutes }
+export { homeRoutes, authRoutes, dashboardRoutes };

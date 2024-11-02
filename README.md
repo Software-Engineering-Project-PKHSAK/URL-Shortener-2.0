@@ -9,27 +9,22 @@
   <a href="https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/johndamilola/URL-Shortener-2.0?style=plastic"></a>
   <img src="https://img.shields.io/github/languages/count/johndamilola/URL-Shortener-2.0">
-  <a href="https://github.com/JohnDamilola/URL-Shortener-2.0/graphs/contributors" alt="Contributors">
+  <a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/people" alt="Contributors">
 <img src="https://img.shields.io/github/contributors/JohnDamilola/URL-Shortener-2.0?style=plastic"/> </a>
-<a href="https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml" alt="Python application">
+<a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/python-app.yml" alt="Python application">
 <img src="https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic?branch=main"/> </a>
-<a href="https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/Coverage.yml/badge.svg" alt="Code coverage">
-<img src="https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/Coverage.yml/badge.svg"/> </a>
-<a href="https://app.codecov.io/gh/JohnDamilola/URL-Shortener-2.0" alt="Codecov">
 <img src="https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg"/> </a>
-<a href="https://doi.org/10.5281/zenodo.7401268"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.7401268.svg" alt="DOI"></a>
 <a href="https://img.shields.io/badge/python-v3.9+-yellow.svg" alt="Python version">
 <img src="https://img.shields.io/badge/python-v3.9+-yellow.svg"/> </a>
 <a href="https://img.shields.io/github/repo-size/JohnDamilola/URL-Shortener-2.0?color=brightgreen" alt="Repo size">
 <img src="https://img.shields.io/github/repo-size/JohnDamilola/URL-Shortener-2.0?color=brightgreen"/> </a>
 <img src="https://img.shields.io/github/languages/top/JohnDamilola/URL-Shortener-2.0?style=plastic">
-<img src="https://img.shields.io/tokei/lines/github/johndamilola/URL-Shortener-2.0?style=plastic">
 <a href="https://github.com/JohnDamilola/URL-Shortener-2.0/issues">
   <img src="https://img.shields.io/github/issues-raw/johndamilola/URL-Shortener-2.0?style=plastic"></a>
 
-
-<a href="https://img.shields.io/github/release/JohnDamilola/URL-Shortener-2.0?color=brightblue" alt="Release">
-<img src="https://img.shields.io/github/release/JohnDamilola/URL-Shortener-2.0?color=brightblue"/> </a>
+<img align="center" src="https://img.shields.io/badge/postgres-%23316192.svg?logo=postgresql&logoColor=white"/> </a>
+<img src="https://img.shields.io/badge/flask-%23000.svg?logo=flask&logoColor=white"/>
+<img src="https://img.shields.io/badge/react-%2320232a.svg?logo=react&logoColor=%2361DAFB"/>
 </p>
 
 

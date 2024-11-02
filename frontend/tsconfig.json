@@ -2,11 +2,7 @@
   "compilerOptions": {
     "types": ["jest", "node"],
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,7 +19,5 @@
     "baseUrl": "src",
     "typeRoots": ["global.d.ts"]
   },
-  "include": [
-    "src", "global.d.ts"
-  ]
+  "include": ["src", "global.d.ts", "src/**/*.test.ts", "src/**/*.test.tsx"]
 }

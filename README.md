@@ -33,7 +33,12 @@
 Do you wish you could convert your long urls to a short and easy-to-remember custom one? With tools like tracking number of visits, password protecting links, bulk creation of links and easy filtering. Then URL-Shortner-3.0 is exactly what you need!
 
 ## Watch what makes URL-Shortener-3.0 amazing!
-VIDEO
+
+
+
+https://github.com/user-attachments/assets/c85ac3f4-8301-442c-b325-48390b14abaf
+
+
 
 ## Tech Stack
 <a href="https://flask.palletsprojects.com/en/2.2.x/"><img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" /></a>

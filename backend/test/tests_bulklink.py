@@ -6,7 +6,7 @@ import os
 import uuid  # Import uuid to create test UUIDs
 
 # Add the src directory to the system path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(_file_), '..', 'src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 from app import app, db  # Assuming your app is named "app.py" and "app" is the Flask instance.
 from src.models.user import User  # Importing the User model
@@ -131,5 +131,5 @@ class TestLinkAPI(unittest.TestCase):
         self.assertEqual(response_data['status'], 404)
         self.assertEqual(response_data['message'], 'Link not found.')
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     unittest.main()

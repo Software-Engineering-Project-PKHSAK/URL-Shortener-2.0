@@ -1,8 +1,7 @@
 <p align="center">
   <img
     width="200"
-    src="https://url-bit.web.app/static/media/logo.30eecb4c1eb5969c5aa3.png"
-    alt="URL Shortener 2.0"
+    alt="URL Shortener 3.0"
   />
 </p>
 

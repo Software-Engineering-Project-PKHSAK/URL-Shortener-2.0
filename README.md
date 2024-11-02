@@ -45,8 +45,8 @@ VIDEO
 <a href="https://www.heroku.com/"><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" /></a>
 
 ## Getting started & Installation:
-- Backend [See README.md](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/backend/README.md)
-- Frontend [See README.md](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/frontend/README.md)
+- Backend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/backend/README.md)
+- Frontend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/frontend/README.md)
 
 ## Some of our Current Screens
 <p>

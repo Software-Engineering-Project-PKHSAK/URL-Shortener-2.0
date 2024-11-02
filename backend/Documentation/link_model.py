@@ -62,4 +62,12 @@ class Link(db.Model):
         return '<id {}>'.format(self.id)
 
 def load_link(id):
-    return Link.query.get(id)
+    try:
+        # Ensure the `id` is a valid UUID
+        uuid_obj = uuid.UUID(str(id), version=4)
+    except ValueError:
+        print("Not Valid UUID")
+        # Return None or handle the error if `id` is not a valid UUID
+        return None  # or raise an exception if desired
+
+    return Link.query.get(uuid_obj)

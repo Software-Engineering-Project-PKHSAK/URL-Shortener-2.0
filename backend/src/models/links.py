@@ -1,30 +1,10 @@
-#MIT License
-#
-#Copyright (c) 2022 John Damilola, Leo Hsiang, Swarangi Gaurkar, Kritika Javali, Aaron Dias Barreto
-#
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
-#
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
-#
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
 import uuid
 try:
 	from ..extensions import db
 except ImportError:
 	from extensions import db
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 class Link(db.Model):
     __tablename__ = 'links'
@@ -45,8 +25,7 @@ class Link(db.Model):
     updated_on = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), nullable=False, server_onupdate=db.func.now())
     visit_count = db.Column(db.Integer, default=0)  # Current visit count
     max_visits = db.Column(db.Integer, default=999)  # Maximum number of visits before deactivation
-   
-    
+    tags = db.Column(db.ARRAY(db.String(50)), default=[])
 	# make a relationship with 'User' model
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('users.id'))
 
@@ -68,7 +47,8 @@ class Link(db.Model):
         'created_on':self.created_on, 
         'updated_on':self.updated_on,   
         'visit_count':self.visit_count,
-        'max_visits':self.max_visits
+        'max_visits':self.max_visits,
+        'tags': self.tags
     }
 
     def __repr__(self):

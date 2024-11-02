@@ -136,6 +136,7 @@ export const BulkCreateLinkDrawer = ({
       placement="right"
       onClose={() => setOpenedBulkCreateLink(false)}
       open={openedBulkCreateLink}
+      size="large"
     >
       <div>
         <p>
@@ -162,7 +163,6 @@ export const BulkCreateLinkDrawer = ({
   https://yetanotherexample11111.com,Yet Another1111 Example`}</pre>
 
         <input type="file" onChange={handleFileChange} accept=".json,.txt" />
-
         <Button
           size={"large"}
           onClick={handleBulkSubmit}

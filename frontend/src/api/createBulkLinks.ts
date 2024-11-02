@@ -8,7 +8,12 @@ export const useCreateBulkLinks = () => {
       let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
       const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/links/create_bulk?user_id=${user_id}`,
-        jsonPayload
+        jsonPayload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     },

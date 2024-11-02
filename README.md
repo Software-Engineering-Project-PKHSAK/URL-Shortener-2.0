@@ -40,6 +40,12 @@ https://github.com/user-attachments/assets/c85ac3f4-8301-442c-b325-48390b14abaf
 
 
 
+https://github.com/user-attachments/assets/5094efe1-5a2b-47c3-8353-e98d873a37c7
+
+
+
+
+
 ## Tech Stack
 <a href="https://flask.palletsprojects.com/en/2.2.x/"><img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" /></a>
 <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" /></a>

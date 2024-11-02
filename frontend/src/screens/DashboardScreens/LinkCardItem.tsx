@@ -4,6 +4,8 @@ import toast, { Toaster } from "react-hot-toast";
 import QRCode from "react-qr-code";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
+import { useDeleteLink } from "api/deleteLink";
+import Swal from "sweetalert2";
 
 export const LinkCardItem = ({
   setOpenedLink,
@@ -27,8 +29,10 @@ export const LinkCardItem = ({
   const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
   let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
 
+  const deleteLinkMutation = useDeleteLink();
+
   const handleCopy = async () => {
-    const text = `http://localhost:5001/${stub}`;
+    const text = `${process.env.REACT_APP_API_BASE_URL}/${stub}`;
     if ("clipboard" in navigator) {
       await navigator.clipboard.writeText(text);
     } else {
@@ -94,38 +98,33 @@ export const LinkCardItem = ({
   //       });
   //   };
 
-  //   const handleDeleteLink = async (e: any) => {
-  //     e.preventDefault();
-  //     // const payload = {
-  //     // 	// ...item,
-  //     // 	long_url,
-  //     // 	disabled: !disabled,
-  //     // };
+  const handleDeleteLink = async (e: any) => {
+    e.preventDefault();
 
-  //     setIsDeleting(true);
-  //     await http
-  //       .delete(`http://localhost:5002/links/delete/${id}?user_id=${user_id}`)
-  //       .then((res) => {
-  //         Swal.fire({
-  //           icon: "success",
-  //           title: `Link Deleted Successfully!`,
-  //           text: "You have successfully deleted this link",
-  //           confirmButtonColor: "#221daf",
-  //         }).then(() => {
-  //           setIsDeleting(false);
-  //           window.location.reload();
-  //         });
-  //       })
-  //       .catch((err) => {
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: `Link Deletion Failed!`,
-  //           text: "An error occurred, please try again",
-  //           confirmButtonColor: "#221daf",
-  //         });
-  //         setIsDeleting(false);
-  //       });
-  //   };
+    setIsDeleting(true);
+    deleteLinkMutation.mutate(id, {
+      onSuccess: () => {
+        Swal.fire({
+          icon: "success",
+          title: `Link Deleted Successfully!`,
+          text: "You have successfully deleted this link",
+          confirmButtonColor: "#221daf",
+        }).then(() => {
+          setIsDeleting(false);
+          window.location.reload();
+        });
+      },
+      onError: () => {
+        Swal.fire({
+          icon: "error",
+          title: `Link Deletion Failed!`,
+          text: "An error occurred, please try again",
+          confirmButtonColor: "#221daf",
+        });
+        setIsDeleting(false);
+      },
+    });
+  };
   const isExpired = visit_count >= max_visits;
   return (
     <div className="link-card">
@@ -182,7 +181,7 @@ export const LinkCardItem = ({
             <Popconfirm
               title="Are you sure?"
               icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-              onConfirm={() => {}}
+              onConfirm={handleDeleteLink}
             >
               <button className="btn btn-outline-danger">
                 <i className="fa-solid fa-trash"></i>{" "}

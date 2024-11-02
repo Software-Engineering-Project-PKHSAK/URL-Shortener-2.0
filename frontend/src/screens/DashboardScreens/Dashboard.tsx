@@ -10,6 +10,7 @@ import { CreateLinkDrawer } from "./Drawers/CreateLinkDrawer";
 import { UpdateLinkDrawer } from "./Drawers/UpdateLinkDrawer";
 import { BulkCreateLinkDrawer } from "./Drawers/BulkLinkDrawer";
 import { LinkCardItem } from "./LinkCardItem";
+import { TagFilter } from "./TagFilter";
 
 export var isDisabled: boolean;
 export var isExpired: any;
@@ -27,6 +28,18 @@ const Dashboard = () => {
   const [openedBulkCreateLink, setOpenedBulkCreateLink] =
     useState<boolean>(false);
 
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagSelect = (tags: string[]) => {
+    setSelectedTags(tags);
+  };
+
+  const filteredLinks = linkData?.links?.filter(
+    (link: any) =>
+      selectedTags.length === 0 ||
+      link.tags?.some((tag: string) => selectedTags.includes(tag))
+  );
+
   const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
   let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
   let first_name =
@@ -34,6 +47,10 @@ const Dashboard = () => {
 
   const { total_count, total_disabled, total_enabled, total_engagements } =
     statData?.links || {};
+
+  const getAllTags = (statData: { links: { tags: string[] }[] }): string[] => {
+    return statData?.links.flatMap((link) => link.tags) || [];
+  };
 
   const stats = [
     {
@@ -110,6 +127,14 @@ const Dashboard = () => {
               );
             })}
           </div>
+          <div>
+            {linkData?.links?.length > 0 && (
+              <TagFilter
+                tags={getAllTags(linkData)}
+                onTagSelect={handleTagSelect}
+              />
+            )}
+          </div>
 
           <div className="row table-pane">
             {linkDataLoading
@@ -118,7 +143,7 @@ const Dashboard = () => {
               ? "An error occurred while fetching links"
               : linkData?.links?.length === 0
               ? "No links created yet"
-              : linkData?.links
+              : filteredLinks
                   ?.sort((a: any, b: any) =>
                     moment(b.created_on).diff(moment(a.created_on))
                   )

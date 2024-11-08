@@ -39,8 +39,19 @@ export const BulkCreateLinkDrawer = ({
       const reader = new FileReader();
       reader.onload = () => {
         try {
-          const jsonData = JSON.parse(reader.result as string);
-          setJsonData(jsonData);
+          const parsedData = JSON.parse(reader.result as string);
+        const links = parsedData.links.map((link: any) => {
+          const { long_url } = link;
+          let { title } = link;
+          if (!title) {
+            const url = new URL(long_url);
+            title = url.hostname;
+          }
+
+          return { long_url, title, stub: "stub" };
+        });
+
+        setJsonData({ links });
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -64,11 +75,16 @@ export const BulkCreateLinkDrawer = ({
     const lines = text.split("\n").filter((line) => line.trim() !== "");
     const links = lines.map((line) => {
       // Split each line by comma and trim spaces
-      const [long_url, title, stub] = line
+      let [long_url, title] = line
         .split(",")
         .map((value) => value.trim());
-      if (!long_url || !title) {
+      if (!long_url) {
         throw new Error("Invalid file format");
+      }
+      if(!title){
+				// Set title to the domain name if missing
+				const url = new URL(long_url);
+				title = url.hostname;
       }
       // Create JSON object for each line
       return {

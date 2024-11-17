@@ -424,6 +424,8 @@ def redirect_stub(stub):
 
             link.visit_count += 1
             db.session.commit()
+            if not link.long_url.startswith(("http://", "https://")):
+                link.long_url = "https://" + link.long_url
             return redirect(link.long_url)
 
         # Check anonymous links if not found in regular links

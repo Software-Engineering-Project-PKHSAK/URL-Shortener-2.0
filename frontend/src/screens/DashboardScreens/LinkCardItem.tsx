@@ -48,6 +48,33 @@ export const LinkCardItem = ({
     });
   };
 
+  const handleCopyQRCode = () => {
+    const svgElement = document.getElementById(`qr-gen${id}`);
+    
+    if (svgElement) {
+      // Serialize the SVG element to a string
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svgElement);
+
+      // Copy to clipboard
+      navigator.clipboard.writeText(svgString).then(
+        () => Swal.fire({
+          icon: "success",
+          title: "QR code copied!",
+          text: "SVG code copied to clipboard!",
+          confirmButtonColor: "#221daf",
+        }),
+        (err) => Swal.fire({
+          icon: "error",
+          title: "Couldn't copy QR code",
+          text: "Unable to copy SVG code to clipboard!",
+          confirmButtonColor: "#221daf",
+        })
+      );
+    } else {
+      alert("SVG element not found!");
+    }
+  };
   //   const downloadQRCode = () => {
   //     // Generate download with use canvas and stream
   //     const canvas = document.getElementById("qr-gen") as HTMLCanvasElement;;
@@ -176,6 +203,12 @@ export const LinkCardItem = ({
                 >
                   <i className="fa-solid fa-pen-to-square"></i> Edit
                 </button>
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={() => handleCopyQRCode()}
+                >
+                  <i className="fa-solid fa-copy"></i> Copy QR
+                </button>
               </>
             )}
             <Popconfirm
@@ -191,7 +224,7 @@ export const LinkCardItem = ({
           </div>
         </div>
         <div>
-          <QRCode id="qr-gen" value={long_url} size={100} level={"H"} />
+          <QRCode id={"qr-gen"+id} value={long_url} size={100} level={"H"} />
         </div>
       </div>
       {tags.length > 0 && (

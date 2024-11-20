@@ -443,7 +443,7 @@ def redirect_stub(stub):
             # If requested through frontend/a/{stub}, return JSON for front-end landing page, 
             # else redirect directly to long-url
             referrer_url = request.headers.get("Origin")
-            if "http://localhost:3000" in referrer_url:
+            if referrer_url is not None and "http://localhost:3000" in referrer_url:
                 return jsonify(
                     link=link.to_json(), status=200
                 ), 200

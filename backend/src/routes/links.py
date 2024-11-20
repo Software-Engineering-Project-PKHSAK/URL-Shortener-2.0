@@ -140,6 +140,18 @@ def create_engagement(link_id, data):
     db.session.add(engagement)
     return engagement
 
+def create_engagement_from_link(link):
+    """Creates a new engagement record from link."""
+    engagement = Engagements(
+        link_id = link.id,
+        utm_source=link.utm_source,
+        utm_medium=link.utm_medium,
+        utm_campaign=link.utm_campaign,
+        utm_term=link.utm_term,
+        utm_content=link.utm_content
+    )
+    db.session.add(engagement)
+    return engagement
 
 # Route Handlers
 @links_bp.route("/links/<id>", methods=["GET"])
@@ -422,11 +434,21 @@ def redirect_stub(stub):
                 db.session.commit()
                 return jsonify(message="This link has been disabled.", status=403), 403
 
+            create_engagement_from_link(link)
             link.visit_count += 1
             db.session.commit()
             if not link.long_url.startswith(("http://", "https://")):
                 link.long_url = "https://" + link.long_url
-            return redirect(link.long_url)
+            
+            # If requested through frontend/a/{stub}, return JSON for front-end landing page, 
+            # else redirect directly to long-url
+            referrer_url = request.headers.get("Origin")
+            if "http://localhost:3000" in referrer_url:
+                return jsonify(
+                    link=link.to_json(), status=200
+                ), 200
+            else:
+                return redirect(link.long_url)
 
         # Check anonymous links if not found in regular links
         anon_link = AnonymousLink.query.filter_by(stub=stub).first()

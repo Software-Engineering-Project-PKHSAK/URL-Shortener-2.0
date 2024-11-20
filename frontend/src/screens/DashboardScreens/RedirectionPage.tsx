@@ -12,7 +12,6 @@ const RedirectionPage = () => {
 
   let dateTime = new Date();
   const [endpoint1Called, setEndpoint1Called] = useState(false);
-  const [endpoint2Called, setEndpoint2Called] = useState(false);
 
   const [errorPage, setErrorPage] = useState<boolean>(false);
 
@@ -22,31 +21,10 @@ const RedirectionPage = () => {
     }
   }, []);
 
-  const updateLinkEngagement = async (
-    link_id: any,
-    utm_source: any,
-    utm_medium: any,
-    utm_campaign: any,
-    utm_term: any,
-    utm_content: any
-  ) => {
-    if (!endpoint2Called) {
-      await http
-        .post(`http://localhost:5002/links/engagements/${link_id}/create`, {
-          utm_source,
-          utm_medium,
-          utm_campaign,
-          utm_term,
-          utm_content,
-        })
-        .then(() => setEndpoint2Called(true));
-    }
-  };
-
   const fetchURL = async () => {
     const url = pathname.startsWith("/a/")
-      ? `http://localhost:5002/${stub}`
-      : `http://localhost:5002/${stub}`;
+      ? `http://localhost:8080/${stub}`
+      : `http://localhost:8080/${stub}`;
     await http
       .get(url)
       .then(async (res) => {
@@ -64,22 +42,9 @@ const RedirectionPage = () => {
           utm_term,
           utm_content,
         } = link || {};
-        if (pathname.startsWith("/a/")) {
-          return window.location.assign(long_url);
-        }
         const isExpired =
           (expire_on && new Date(expire_on) > dateTime) || false;
         if (disabled == false && !password_hash && !isExpired) {
-          if (!endpoint2Called) {
-            await updateLinkEngagement(
-              link_id,
-              utm_source,
-              utm_medium,
-              utm_campaign,
-              utm_term,
-              utm_content
-            );
-          }
           return window.location.assign(long_url);
         } else if (disabled == true || isExpired) {
           Swal.fire({
@@ -115,8 +80,6 @@ const RedirectionPage = () => {
         // errorPage = <ShortUrlRedirectionPage />
       });
   };
-
-  console.log(endpoint1Called, endpoint2Called);
 
   if (errorPage) {
     return <ShortUrlRedirectionPage />;

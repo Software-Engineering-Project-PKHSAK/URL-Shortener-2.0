@@ -49,7 +49,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
 
   const handleSubmit = async () => {
     setIsUpdating(true);
-    if (payload.stub === openedLink.stub) {
+    if (payload && openedLink && (payload.stub !== undefined || payload.stub !== null) && (payload?.stub === openedLink?.stub)) {
       delete payload.stub;
     }
     updateLinkMutation.mutate(

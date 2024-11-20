@@ -94,7 +94,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
             <div className="form-group">
               <label>Title *</label>
               <Input
-                value={payload?.title}
+                value={payload?.title || openedLink?.title}
                 onChange={(e) => handleChange("title", e)}
                 size="large"
               />
@@ -102,23 +102,23 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
             <div className="form-group">
               <label>Long URL *</label>
               <Input
-                value={payload?.long_url}
+                value={payload?.long_url || openedLink?.long_url}
                 onChange={(e) => handleChange("long_url", e)}
                 size="large"
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Custom end-link (optional)</label>
               <Input
-                value={payload?.stub}
+                value={payload?.stub || openedLink?.stub}
                 onChange={(e) => handleChange("stub", e)}
                 size="large"
               />
-            </div>
+            </div> */}
             <div className="form-group">
               <label>Tags (comma-separated)</label>
               <Input
-                value={payload?.tags?.join(', ') || ''}
+                value={payload?.tags?.join(', ') || openedLink?.tags?.join(', ') || ''}
                 onChange={handleTagsChange}
                 size="large"
                 placeholder="Enter tags separated by commas"
@@ -134,7 +134,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
                   <div className="form-group">
                     <label>UTM Source (optional)</label>
                     <Input
-                      value={payload?.utm_source}
+                      value={payload?.utm_source || openedLink?.utm_source}
                       onChange={(e) => handleChange("utm_source", e)}
                       size="large"
                     />
@@ -142,7 +142,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
                   <div className="form-group">
                     <label>UTM Medium (optional)</label>
                     <Input
-                      value={payload?.utm_medium}
+                      value={payload?.utm_medium || openedLink?.utm_medium}
                       onChange={(e) => handleChange("utm_medium", e)}
                       size="large"
                     />
@@ -150,7 +150,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
                   <div className="form-group">
                     <label>UTM Campaign (optional)</label>
                     <Input
-                      value={payload?.utm_campaign}
+                      value={payload?.utm_campaign || openedLink?.utm_campaign}
                       onChange={(e) => handleChange("utm_campaign", e)}
                       size="large"
                     />
@@ -158,7 +158,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
                   <div className="form-group">
                     <label>UTM Term (optional)</label>
                     <Input
-                      value={payload?.utm_term}
+                      value={payload?.utm_term || openedLink?.utm_term}
                       onChange={(e) => handleChange("utm_term", e)}
                       size="large"
                     />
@@ -166,7 +166,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
                   <div className="form-group">
                     <label>UTM Content (optional)</label>
                     <Input
-                      value={payload?.utm_content}
+                      value={payload?.utm_content || openedLink?.utm_content}
                       name="utm_content"
                       onChange={(e) => handleChange("utm_content", e)}
                       size="large"
@@ -186,7 +186,7 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
                     <label>Expire on (optional)</label>
                     <DatePicker
                       value={
-                        payload?.expire_on ? moment(payload.expire_on) : null
+                        payload?.expire_on ? moment(payload.expire_on) : openedLink?.expire_on ? moment(openedLink.expire_on) : null
                       }
                       showTime
                       onChange={handleDateChange}

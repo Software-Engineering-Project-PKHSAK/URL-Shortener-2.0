@@ -40,7 +40,8 @@ class Engagements(db.Model):
     created_on = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), nullable=False)
     updated_on = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), nullable=False, server_onupdate=db.func.now())
     # make a relationship with 'Link' model
-    link_id = db.Column(UUID(as_uuid=True), db.ForeignKey('links.id'))
+    link_id = db.Column(UUID(as_uuid=True), db.ForeignKey('links.id', ondelete="CASCADE"))
+    long_url = db.Column(db.String(100), nullable=True)
 
     def to_json(self):
         return {
@@ -51,6 +52,7 @@ class Engagements(db.Model):
         'utm_campaign':self.utm_campaign,
         'utm_term':self.utm_term,
         'utm_content':self.utm_content,
+        'long_url': self.long_url,
         'created_on':self.created_on, 
         'updated_on':self.updated_on
         }

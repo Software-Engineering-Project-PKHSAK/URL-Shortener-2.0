@@ -22,6 +22,7 @@ export const LinkCardItem = ({
     max_visits = Infinity,
     visit_count = 0,
     tags,
+    ab_variants
   } = item || {};
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -184,6 +185,11 @@ export const LinkCardItem = ({
           <p style={{ overflowWrap: "break-word" }}>
             <b>Original URL:</b> {long_url}
           </p>
+          {ab_variants && ab_variants.length > 0 && (
+            <p style={{ overflowWrap: "break-word" }}>
+              <b>A/B URLs:</b> {ab_variants.map((item:any) => `${item.url} (${item.percentage}%)`).join(',')}
+            </p>
+          )}
           <div className="btn-pane">
             {isExpired ? (
               <p style={{ color: "red" }}>

@@ -8,8 +8,10 @@ import {
   Switch,
   List,
   Typography,
+  Form
 } from "antd";
 import { useCreateLink } from "api/createLink";
+import { stringify } from "querystring";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -21,6 +23,7 @@ export const CreateLinkDrawer = ({
   setOpenedCreateLink,
 }: any) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isABValid, setIsABValid] = useState(true);
   const [payload, setPayload] = useState<any>({
     created_on: null,
     disabled: false,
@@ -36,6 +39,7 @@ export const CreateLinkDrawer = ({
     utm_term: null,
     max_visits: null,
     tags: [],
+    ab_variants: []
   });
   const createLinkMutation = useCreateLink();
   const handleChange = (propertyName: string, e: any) => {
@@ -62,6 +66,7 @@ export const CreateLinkDrawer = ({
 
   const handleSubmit = async () => {
     setIsLoading(true);
+    console.log("Hello rbuh", JSON.parse(JSON.stringify(payload)));
     createLinkMutation.mutate(payload, {
       onSuccess: () => {
         Swal.fire({
@@ -83,6 +88,47 @@ export const CreateLinkDrawer = ({
       },
     });
   };
+
+  const onABURLChange = (index: number, url: string) => {
+    const _payload = { ...payload };
+    _payload.ab_variants[index] = _payload.ab_variants[index] || {};
+    _payload.ab_variants[index]["url"] = url;
+    if(url === "" || _payload.ab_variants[index]["percentage"] == null) {
+      setIsABValid(false);
+    } else {
+      setIsABValid(true); 
+    }
+    setPayload(_payload);
+  }
+
+  const onABPercentageChange = (index: number, percentage: string) => {
+    const _payload = { ...payload };
+    _payload.ab_variants[index] = _payload.ab_variants[index] || {};
+    _payload.ab_variants[index]["percentage"] = percentage;
+    if(_payload.ab_variants[index]["url"] === "" || percentage == null) {
+      setIsABValid(false);
+    } else {
+      setIsABValid(true);
+    }
+    setPayload(_payload);
+  }
+
+  const validateAllABVariants = () => {
+    const _payload = { ...payload };
+    const isValid = _payload.ab_variants.every((variant:any) => {
+      return variant.url && variant.percentage != null;
+    });
+    setIsABValid(isValid);
+  }
+
+  const getSumOfABVariantsPercentages = () => {
+    const _payload = { ...payload };
+    let sum = 0;
+    _payload.ab_variants.forEach((variant:any) => {
+      sum += variant.percentage ? parseInt(variant.percentage): 0; 
+    });
+    return sum;
+  }
 
   return (
     <Drawer
@@ -124,7 +170,7 @@ export const CreateLinkDrawer = ({
             <Switch defaultChecked onChange={handleSwitchChange} />
           </div>
           <div className="form-group">
-            <Collapse defaultActiveKey={["1"]} onChange={() => null}>
+            <Collapse onChange={() => null}>
               <Panel header="UTM Parameters For Tracking (optional)" key="1">
                 <div className="form-group">
                   <label>UTM Source (optional)</label>
@@ -176,6 +222,96 @@ export const CreateLinkDrawer = ({
                   <DatePicker showTime onChange={handleDateChange} />
                 </div>
               </Panel>
+              <Panel header="A/B Testing" key="3">
+              <Form
+                name="dynamic_form_nest_item"
+                style={{
+                  maxWidth: 600,
+                }}
+                autoComplete="off"
+              >
+                <Form.List name="users">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map(({ key, name, ...restField }, index) => (
+                        <Space
+                          key={key}
+                          style={{
+                            display: 'flex',
+                            marginBottom: 8,
+                          }}
+                          align="baseline"
+                        >
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'ab_url']}
+                            rules={[
+                              {
+                                validator: (_, value) => {
+                                  if (value === undefined || value === "") {
+                                    setIsABValid(false);
+                                    return Promise.reject(new Error("URL is required"));
+                                  }
+                                  if (value === payload.long_url) {
+                                    setIsABValid(false);
+                                    return Promise.reject(new Error("URL cannot be same as long URL"));
+                                  }
+                                  return Promise.resolve();
+                                },
+                              }
+                            ]}
+                          >
+                          <Input 
+                            placeholder="URL" 
+                            onChange={(e) =>
+                              onABURLChange(index, e.target.value)
+                            }/>
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "percentage"]}
+                            rules={[
+                              {
+                                validator: (_, value) => {
+                                  if (value === undefined || value === "") {
+                                    setIsABValid(false);
+                                    return Promise.reject(new Error("Percentage is required"));
+                                  }
+                                  if (value < 0 || value > 100) {
+                                    setIsABValid(false);
+                                    return Promise.reject(new Error("Percentage must be between 0 and 100"));
+                                  }
+                                  if(getSumOfABVariantsPercentages() > 100){
+                                    setIsABValid(false);
+                                    return Promise.reject(new Error("All percentages' sum must be less than 100"));
+                                  }
+                                  return Promise.resolve();
+                                },
+                              }
+                            ]}
+                          >
+                          <Input 
+                            placeholder="Percentage" 
+                            type="number"
+                            min={0} 
+                            max={100}
+                            onChange={(e) =>
+                              onABPercentageChange(index, e.target.value)
+                            }/>
+                          </Form.Item>
+                          <Button type="link" onClick={() => {remove(name); validateAllABVariants()}}> X </Button>
+                        </Space>
+                      ))}
+                      <Form.Item>
+                        <Button type="dashed" onClick={() => {add(); setIsABValid(false);}} block>
+                          + Add Item
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              </Form>
+              </Panel>
             </Collapse>
           </div>
           <div className="form-group">
@@ -183,7 +319,7 @@ export const CreateLinkDrawer = ({
               <Button
                 size={"large"}
                 onClick={() => setOpenedCreateLink(false)}
-                disabled={isLoading}
+                disabled={isLoading || !isABValid}
               >
                 Cancel
               </Button>
@@ -191,7 +327,7 @@ export const CreateLinkDrawer = ({
                 size={"large"}
                 onClick={handleSubmit}
                 type="primary"
-                disabled={isLoading}
+                disabled={isLoading || !isABValid}
                 loading={isLoading}
               >
                 Submit

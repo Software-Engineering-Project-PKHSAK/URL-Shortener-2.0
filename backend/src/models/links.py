@@ -3,7 +3,7 @@ try:
 	from ..extensions import db
 except ImportError:
 	from extensions import db
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import relationship
 
 class Link(db.Model):
@@ -29,6 +29,9 @@ class Link(db.Model):
 	# make a relationship with 'User' model
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('users.id'))
 
+    ab_variants =db.Column(JSONB, default=[])
+    # engagements = relationship("Engagement", back_populates="link", cascade="all, delete-orphan")
+
     def to_json(self):
         return {
         'id': self.id,
@@ -48,7 +51,8 @@ class Link(db.Model):
         'updated_on':self.updated_on,   
         'visit_count':self.visit_count,
         'max_visits':self.max_visits,
-        'tags': self.tags
+        'tags': self.tags,
+        'ab_variants': self.ab_variants
     }
 
     def __repr__(self):

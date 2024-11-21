@@ -60,7 +60,8 @@ def create_link_object(user_id, data, is_anonymous=False):
                 "password_hash": data.get("password_hash"),
                 "expire_on": data.get("expire_on"),
                 "max_visits": data.get("max_visits"),
-                "tags": list(set(data.get("tags", [])))
+                "tags": list(set(data.get("tags", []))),
+                "ab_variants": data.get("ab_variants")
             }
         )
 
@@ -136,6 +137,7 @@ def create_engagement(link_id, data):
         utm_campaign=data.get("utm_campaign"),
         utm_term=data.get("utm_term"),
         utm_content=data.get("utm_content"),
+        long_url=data.get("long_url") # Check this from front-end
     )
     db.session.add(engagement)
     return engagement
@@ -148,10 +150,27 @@ def create_engagement_from_link(link):
         utm_medium=link.utm_medium,
         utm_campaign=link.utm_campaign,
         utm_term=link.utm_term,
-        utm_content=link.utm_content
+        utm_content=link.utm_content,
+        long_url = link.long_url
     )
     db.session.add(engagement)
     return engagement
+
+def get_random_url_for_ab(link):
+    """Returns a weighted random url based on ab variants provided"""
+    ab_variants = link.ab_variants
+    if ab_variants:
+        urls = [item["url"] for item in ab_variants]
+        percentages = [ (float((item["percentage"]))/100) if '.' in item["percentage"] else (int((item["percentage"]))/100) 
+                        for item in ab_variants
+                      ]
+        urls.append(link.long_url)
+        percentages.append(1-sum(percentages))
+        print(link.long_url)
+        print(urls, percentages)
+        return random.choices(urls, percentages,k=1)[0]
+    else:
+        return link.long_url
 
 # Route Handlers
 @links_bp.route("/links/<id>", methods=["GET"])
@@ -434,13 +453,18 @@ def redirect_stub(stub):
                 db.session.commit()
                 return jsonify(message="This link has been disabled.", status=403), 403
 
+            url_to_redirect_to = link.long_url
+            if link.ab_variants is not None and len(link.ab_variants) > 0:
+                url_to_redirect_to = get_random_url_for_ab(link)
+
             create_engagement_from_link(link)
             link.visit_count += 1
             db.session.commit()
-            if not link.long_url.startswith(("http://", "https://")):
-                link.long_url = "https://" + link.long_url
             
-            # If requested through frontend/a/{stub}, return JSON for front-end landing page, 
+            if not url_to_redirect_to.startswith(("http://", "https://")):
+                url_to_redirect_to = "https://" + url_to_redirect_to
+
+            # If requested through frontend/a/{stub}, return JSON for front-end landing page,
             # else redirect directly to long-url
             referrer_url = request.headers.get("Origin")
             if referrer_url is not None and "http://localhost:3000" in referrer_url:
@@ -448,7 +472,7 @@ def redirect_stub(stub):
                     link=link.to_json(), status=200
                 ), 200
             else:
-                return redirect(link.long_url)
+                return redirect(url_to_redirect_to)
 
         # Check anonymous links if not found in regular links
         anon_link = AnonymousLink.query.filter_by(stub=stub).first()

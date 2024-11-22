@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Collapse,
@@ -23,6 +23,10 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [payload, setPayload] = useState<any>(openedLink);
   const updateLinkMutation = useUpdateLink();
+  
+  useEffect(() => {
+    setPayload(openedLink);
+  }, [openedLink]);
 
   const handleChange = (propertyName: string, e: any) => {
     const _payload = { ...payload };
@@ -126,7 +130,10 @@ export const UpdateLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
             </div>
             <div className="form-group">
               <span style={{ marginRight: "10px" }}>Enabled?</span>
-              <Switch defaultChecked onChange={handleSwitchChange} />
+              <Switch 
+                checked={!payload?.disabled || false} 
+                onChange={handleSwitchChange} 
+              />
             </div>
             <div className="form-group">
               <Collapse defaultActiveKey={["1"]} onChange={() => null}>

@@ -42,6 +42,9 @@ class Engagements(db.Model):
     # make a relationship with 'Link' model
     link_id = db.Column(UUID(as_uuid=True), db.ForeignKey('links.id', ondelete="CASCADE"))
     long_url = db.Column(db.String(100), nullable=True)
+    device_os = db.Column(db.String(100), nullable=True)
+    device_browser = db.Column(db.String(100), nullable=True)
+    device_type = db.Column(db.String(100), nullable=True)
 
     def to_json(self):
         return {
@@ -54,7 +57,10 @@ class Engagements(db.Model):
         'utm_content':self.utm_content,
         'long_url': self.long_url,
         'created_on':self.created_on, 
-        'updated_on':self.updated_on
+        'updated_on':self.updated_on,
+        'device_type': self.device_type,
+        'device_os': self.device_os,
+        'device_browser': self.device_browser
         }
 
     def __repr__(self):

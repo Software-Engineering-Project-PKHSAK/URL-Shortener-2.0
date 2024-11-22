@@ -22,5 +22,7 @@ PyJWT==2.6.0
 python-dotenv==0.21.0
 six==1.16.0
 SQLAlchemy==1.4.43
+ua-parser==0.18.0
+user-agents==2.2.0
 Werkzeug==2.2.2
 zipp==3.10.0

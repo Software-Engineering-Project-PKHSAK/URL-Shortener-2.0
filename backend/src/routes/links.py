@@ -3,6 +3,8 @@ from operator import and_
 from flask import Blueprint, jsonify, redirect, request
 from flask_cors import cross_origin
 from string import ascii_letters, digits
+from enum import Enum, auto
+from user_agents import parse as user_agent_parser
 from ..models.links import Link, db, load_link
 from ..models.links_anonymous import AnonymousLink
 from ..models.user import User, login_required2
@@ -10,6 +12,10 @@ from ..models.engagements import Engagements
 
 links_bp = Blueprint("links_bp", __name__)
 
+class DeviceType(Enum):
+    MOBILE = auto()
+    TABLET = auto()
+    DESKTOP = auto()
 
 # Utility Functions
 def create_stub(length=12):
@@ -142,8 +148,9 @@ def create_engagement(link_id, data):
     db.session.add(engagement)
     return engagement
 
-def create_engagement_from_link(link):
-    """Creates a new engagement record from link."""
+def create_engagement_from_link_and_user_agent(link, user_agent):
+    """Creates a new engagement record from link and user agent."""
+    ua_os, ua_browser, ua_device_type = get_device_properties(user_agent)
     engagement = Engagements(
         link_id = link.id,
         utm_source=link.utm_source,
@@ -151,10 +158,26 @@ def create_engagement_from_link(link):
         utm_campaign=link.utm_campaign,
         utm_term=link.utm_term,
         utm_content=link.utm_content,
-        long_url = link.long_url
+        long_url = link.long_url,
+        device_type = ua_device_type,
+        device_os = ua_os,
+        device_browser = ua_browser
     )
     db.session.add(engagement)
     return engagement
+
+def get_device_properties(user_agent):
+    ua_os = user_agent.os.family + ' ' + user_agent.os.version_string
+    ua_browser = user_agent.browser.family + ' ' + user_agent.browser.version_string
+    ua_device_type = None
+    if user_agent.is_mobile:
+        ua_device_type = DeviceType.MOBILE.name
+    elif user_agent.is_tablet:
+        ua_device_type = DeviceType.TABLET.name
+    elif user_agent.is_pc:
+        ua_device_type = DeviceType.DESKTOP.name
+
+    return tuple([ua_os, ua_browser, ua_device_type])
 
 def get_random_url_for_ab(link):
     """Returns a weighted random url based on ab variants provided"""
@@ -457,7 +480,8 @@ def redirect_stub(stub):
             if link.ab_variants is not None and len(link.ab_variants) > 0:
                 url_to_redirect_to = get_random_url_for_ab(link)
 
-            create_engagement_from_link(link)
+            user_agent = user_agent_parser(request.headers.get("User-Agent"))
+            create_engagement_from_link_and_user_agent(link, user_agent)
             link.visit_count += 1
             db.session.commit()
             

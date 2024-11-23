@@ -79,7 +79,16 @@ https://github.com/user-attachments/assets/5094efe1-5a2b-47c3-8353-e98d873a37c7
 <a href="https://ant.design/"><img src="https://img.shields.io/badge/Ant%20Design-1890FF?style=for-the-badge&logo=antdesign&logoColor=white" /></a>
 <a href="https://www.heroku.com/"><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" /></a>
 
-## Getting started & Installation:
+## Getting started 
+- Open your terminal on any Windows/Linux device
+- Clone the repository using the command 
+
+git clone https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0
+
+
+## Installation:
+For installing the necessary libraries click on the links below for step by step procedure:
+
 - Backend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/backend/README.md)
 - Frontend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/frontend/README.md)
 

@@ -1,9 +1,7 @@
 <p align="center">
-  <img
-    width="200"
-    alt="URL Shortener 3.0"
-  />
+  <img src="https://github.com/user-attachments/assets/12d684be-2f8a-49be-b49d-f56170053439" alt="URL_Shortener" width="350">
 </p>
+
 
 
 <p align="center">

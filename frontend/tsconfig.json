@@ -17,7 +17,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "typeRoots": ["global.d.ts"]
+    "typeRoots": ["global.d.ts", "./node_modules/@types"]
   },
   "include": ["src", "global.d.ts", "src/**/*.test.ts", "src/**/*.test.tsx"]
 }

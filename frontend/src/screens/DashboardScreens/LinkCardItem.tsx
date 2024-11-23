@@ -58,20 +58,29 @@ export const LinkCardItem = ({
       const svgString = serializer.serializeToString(svgElement);
 
       // Copy to clipboard
-      navigator.clipboard.writeText(svgString).then(
-        () => Swal.fire({
-          icon: "success",
-          title: "QR code copied!",
-          text: "SVG code copied to clipboard!",
-          confirmButtonColor: "#221daf",
-        }),
-        (err) => Swal.fire({
+      if(navigator.clipboard === undefined || navigator.clipboard === null) {
+        Swal.fire({
           icon: "error",
           title: "Couldn't copy QR code",
-          text: "Unable to copy SVG code to clipboard!",
+          text: "Unable to access browser clipboard!",
           confirmButtonColor: "#221daf",
         })
-      );
+      } else {
+        navigator.clipboard.writeText(svgString).then(
+          () => Swal.fire({
+            icon: "success",
+            title: "QR code copied!",
+            text: "SVG code copied to clipboard!",
+            confirmButtonColor: "#221daf",
+          }),
+          (err) => Swal.fire({
+            icon: "error",
+            title: "Couldn't copy QR code",
+            text: "Unable to copy SVG code to clipboard!",
+            confirmButtonColor: "#221daf",
+          })
+        );
+      }
     } else {
       alert("SVG element not found!");
     }

@@ -20,3 +20,11 @@ create database url_shortener;
 
 8. flask run
 
+### Heroku setup
+
+9. git remote add heroku https://git.heroku.com/url-shortener-server-api.git
+
+### Heroku deployment
+10. cd ../ && git subtree push --prefix backend heroku main
+heroku run flask db upgrade
+

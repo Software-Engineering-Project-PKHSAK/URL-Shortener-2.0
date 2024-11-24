@@ -87,8 +87,8 @@ git clone https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2
 ## Installation:
 For installing the necessary libraries click on the links below for step by step procedure:
 
-- Backend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/backend/README.md)
-- Frontend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/frontend/README.md)
+- Backend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/prateek-update/backend/README.md)
+- Frontend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/prateek-update/frontend/README.md)
 
 ## Some of our Current Screens
 <p>
@@ -130,22 +130,36 @@ For installing the necessary libraries click on the links below for step by step
   <li>View analytics for your links</li>
 </ul>
 
+## Phase 4
+<ul>
+  <li>A/B Testing: Introduce multiple variants of redirection URLs with customizable weights to enable A/B testing. View live analysis directly on your dashboard!
+<li>Device Details: Retrieve detailed device information, including type (Desktop, Mobile, etc.), operating system, and browser (name and version), when using our engagement API. (Coming soon to the front end!)</li>
+<li>Copy QR Code: Easily copy QR codes as SVGs directly from the dashboard, simplifying integration into your app.</li>
+</ul>
+
 ## Future Scope
 <ul>
   <li>Display charts to show engagement analytics using UTM parameters</li>
   <li>Country/Region targeting</li>
 </ul>
 
+## Bugfixes: 🏹🐞
+<ul>
+  <li> Fixed an issue where redirection failed for non-fully qualified URLs (e.g., missing https://).</li>
+  <li>Editing a link now pre-fills all existing properties, so you no longer need to remember or re-enter them.</li>
+  <li>Resolved a bug with the Enabled state on the edit screen to ensure it works reliably.</li>
+</ul>
+
 ## Contributions to the Project
-Please refer to the [Contributing.md](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/Contributing.md) if you want to contrbute to the URL Shortener source code. Follow all the guidelines mentioned and raise a pull request for the developers to review before the code goes to the main source code.
+Please refer to the [Contributing.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main-development/Contributing.md) if you want to contrbute to the URL Shortener source code. Follow all the guidelines mentioned and raise a pull request for the developers to review before the code goes to the main source code.
 
 ## Help
 
 Email any queries to the contributors -
-1. [Bhavishya Tarun](btarun@ncsu.edu)
-2. [Archit Gupta](agupta85@ncsu.edu)
-3. [Vyom Patel](vbpatel3@ncsu.edu)
 
+1. [Akarsh Reddy](aeatham@ncsu.edu)
+2. [Himanshu Singh](hsingh25@ncsu.edu)
+3. [Prateek N Kamath](pnkamath@ncsu.edu)
 
 ## Original Authors 
 
@@ -154,6 +168,9 @@ Email any queries to the contributors -
 3. [Aaron Dias Barreto](https://github.com/aaron278)
 4. [Leo Hsiang](https://github.com/leoohsiang)
 5. [Damilola Babalola](https://github.com/JohnDamilola)
+6. [Bhavishya Tarun](btarun@ncsu.edu)
+7. [Archit Gupta](agupta85@ncsu.edu)
+8. [Vyom Patel](vbpatel3@ncsu.edu)
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)

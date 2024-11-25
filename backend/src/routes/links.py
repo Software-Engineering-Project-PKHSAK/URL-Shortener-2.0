@@ -42,6 +42,30 @@ def validate_stub_string(stub: str) -> bool:
     return tuple([False,"Stub is valid!"])
 
 
+def check_stub_validity(stub):
+    """Checks if the stub is valid and available."""
+    # Get a list of routes
+    routes = [rule.rule.strip("/").split("/") for rule in current_app.url_map.iter_rules()]
+    
+    # Flatten the list and remove duplicates
+    routes_potentially_in_use = list(set([item for sublist in routes for item in sublist]))
+    
+    # Check if the stub matches any route
+    if stub in routes_potentially_in_use:
+        return False, f"'{stub}' is a reserved route"
+    
+    # Validate stub string format
+    condition, message = validate_stub_string(stub)
+    if condition:
+        return False, message
+    
+    # Check if stub already exists in the database
+    already_exists = db.session.query(db.exists().where(Link.stub == stub)).scalar()
+    if already_exists:
+        return False, "Stub is already taken"
+    
+    return True, "Stub is valid and available!"
+
 
 def create_unique_stub(length=6):
     """Generates a unique stub that doesn't exist in the database."""

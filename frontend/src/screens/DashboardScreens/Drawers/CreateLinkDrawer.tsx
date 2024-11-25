@@ -175,6 +175,56 @@ export const CreateLinkDrawer = ({
             <Input onChange={(e) => handleChange("long_url", e)} size="large" />
           </div>
           <div className="form-group">
+            <label>Custom Short URL</label>
+            <div className="form-group" style={{ display: "flex", alignItems: "center" }}>
+              <Input
+                onChange={(e) => {
+                  const _payload = { ...payload };
+                  _payload["stub"] = null;
+                  setPayload(_payload);
+                  setCustomStubValidation("");
+                  setCustomStubString(e.target.value)
+                }}
+                size="large"
+                style={{ marginRight: "10px" }} // Space between input and button
+              />
+              <Button
+                size="large"
+                onClick={handleCallVerify}
+                disabled={!customStubString.trim()} // Button is disabled if input is empty
+              >
+                Verify
+              </Button>
+            </div>
+            {vs_isError && (
+              <Alert
+                message="Error"
+                description={axios.isAxiosError(vs_error) && vs_error.response?.data?.message || vs_error.message}
+                type="error"
+                showIcon
+                style={{ marginTop: "0px" }} // Space between input/button and error message
+              />
+            )}
+            {customStubValidation && (
+              <Alert
+                message="Error"
+                description={customStubValidation}
+                type="error"
+                showIcon
+                style={{ marginTop: "0px" }} // Space between input/button and error message
+              />
+            )}
+            {!vs_isError && vs_data && (
+              <Alert
+                message="Success"
+                description={vs_data.message}
+                type="success"
+                showIcon
+                style={{ marginTop: "0px" }} // Space between input/button and error message
+              />
+            )}
+          </div>
+          <div className="form-group">
             <label>Tags (comma-separated)</label>
             <Input
               placeholder="Enter tags separated by commas"

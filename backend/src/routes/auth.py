@@ -82,7 +82,7 @@ def login():
         
         if user:
             if bcrypt.check_password_hash(user.password_hash, password):
-                token = jwt.encode({'public_id': str(user.id), 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=12)}, app.config['SECRET_KEY'])
+                token = jwt.encode({'user_id': str(user.id)}, app.config['SECRET_KEY'], "HS256")
                 login_user(user)
                 return jsonify(
                     user = user.to_json(),
@@ -121,9 +121,11 @@ def update(id):
         user.last_name = last_name
         user.email = email
         db.session.commit()
+        token = jwt.encode({'user_id': str(user.id)}, app.config['SECRET_KEY'], "HS256")
 
         return jsonify(
             user = user.to_json(),
+            token = token,
             message = 'Update User Successful',
             status = 201
         ), 201

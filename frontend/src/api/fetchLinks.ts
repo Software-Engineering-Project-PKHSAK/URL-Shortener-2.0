@@ -5,10 +5,14 @@ export const useFetchLinks = () => {
   const query = useQuery({
     queryKey: ["links"],
     queryFn: async () => {
-      const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
-      let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
+      const JSON_WEB_TOKEN = window.localStorage.getItem("JSON_WEB_TOKEN");
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/links/all?user_id=${user_id}`
+        `${process.env.REACT_APP_API_BASE_URL}/links/all`,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON_WEB_TOKEN}`,
+          }
+        }
       );
       return response.data;
     },

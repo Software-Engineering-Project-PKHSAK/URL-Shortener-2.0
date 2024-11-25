@@ -1,13 +1,13 @@
 import random
 from operator import and_
-from flask import Blueprint, jsonify, redirect, request, current_app
+from flask import g, Blueprint, jsonify, redirect, request, current_app
 from flask_cors import cross_origin
 from string import ascii_letters, digits
 from enum import Enum, auto
 from user_agents import parse as user_agent_parser
 from ..models.links import Link, db, load_link
 from ..models.links_anonymous import AnonymousLink
-from ..models.user import User, login_required2
+from ..models.user import User, token_required, token_required
 from ..models.engagements import Engagements
 import re as re
 
@@ -312,12 +312,15 @@ def get_anonymous_link_by_stub(stub):
 
 
 @links_bp.route("/links/all", methods=["GET"])
-@login_required2()
+@token_required()
 @cross_origin(supports_credentials=True)
 def get_all_links():
     """Fetches all links for an authenticated user."""
     try:
-        user_id = request.args.get("user_id")
+        if request.method == "OPTIONS":
+            # Handle the preflight request
+            return '', 204
+        user_id = g.user.id
         if not user_id:
             return jsonify(message="User ID is required", status=400), 400
 
@@ -332,12 +335,12 @@ def get_all_links():
 
 
 @links_bp.route("/links/create", methods=["POST"])
-@login_required2()
+@token_required()
 @cross_origin(supports_credentials=True)
 def create():
     """Creates a new link for an authenticated user."""
     try:
-        user_id = request.args.get("user_id")
+        user_id = g.user.id
         if not user_id:
             return jsonify(message="User ID is required", status=400), 400
 
@@ -382,12 +385,12 @@ def create_anonymous():
 
 
 @links_bp.route("/links/create_bulk", methods=["POST"])
-@login_required2()
+@token_required()
 @cross_origin(supports_credentials=True)
 def create_bulk():
     """Creates multiple links in one request."""
     try:
-        user_id = request.args.get("user_id")
+        user_id = g.user.id
         if not user_id:
             return jsonify(message="User ID is required", status=400), 400
 
@@ -418,7 +421,7 @@ def create_bulk():
 
 
 @links_bp.route("/links/update/<id>", methods=["PATCH"])
-@login_required2()
+@token_required()
 @cross_origin(supports_credentials=True)
 def update(id):
     """Updates an existing link."""
@@ -444,7 +447,7 @@ def update(id):
 
 
 @links_bp.route("/links/delete/<id>", methods=["DELETE"])
-@login_required2()
+@token_required()
 @cross_origin(supports_credentials=True)
 def delete(id):
     """Deletes a link."""
@@ -458,12 +461,12 @@ def delete(id):
 
 
 @links_bp.route("/links/stats", methods=["GET"])
-@login_required2()
+@token_required()
 @cross_origin(supports_credentials=True)
 def get_link_stats():
     """Fetches link statistics for an authenticated user."""
     try:
-        user_id = request.args.get("user_id")
+        user_id = g.user.id
         if not user_id:
             return jsonify(message="User ID is required", status=400), 400
 
@@ -476,7 +479,7 @@ def get_link_stats():
 
 
 @links_bp.route("/links/<link_id>/engagements", methods=["GET"])
-@login_required2()
+@token_required()
 @cross_origin(supports_credentials=True)
 def get_single_link_engagements(link_id):
     """Fetches engagement data for a single link."""

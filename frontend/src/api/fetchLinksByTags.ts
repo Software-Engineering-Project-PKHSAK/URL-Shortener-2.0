@@ -5,11 +5,15 @@ export const useFetchLinksByTags = (tags: any) => {
   const query = useQuery({
     queryKey: ["links"],
     queryFn: async () => {
-      const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
-      let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
+      const JSON_WEB_TOKEN = window.localStorage.getItem("JSON_WEB_TOKEN");
       const tagsParam = tags.join(",");
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/links?user_id=${user_id}&tags=${tagsParam}`
+        `${process.env.REACT_APP_API_BASE_URL}/links?tags=${tagsParam}`,
+        {
+          headers: {
+             Authorization: `Bearer ${JSON_WEB_TOKEN}`,
+          },
+        }
       );
       return response.data;
     },

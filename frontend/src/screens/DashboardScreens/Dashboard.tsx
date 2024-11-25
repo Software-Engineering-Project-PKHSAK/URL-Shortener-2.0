@@ -41,7 +41,6 @@ const Dashboard = () => {
   );
 
   const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
-  let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
   let first_name =
     (URLshortenerUser && JSON.parse(URLshortenerUser).first_name) || {};
 

@@ -4,13 +4,13 @@ import axios from "axios";
 export const useDeleteLink = () => {
   const mutation = useMutation({
     mutationFn: async (id: any) => {
-      const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
-      let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
+      const JSON_WEB_TOKEN = window.localStorage.getItem("JSON_WEB_TOKEN");
       const response = await axios.delete(
-        `${process.env.REACT_APP_API_BASE_URL}/links/delete/${id}?user_id=${user_id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/links/delete/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
+             Authorization: `Bearer ${JSON_WEB_TOKEN}`,
           },
         }
       );

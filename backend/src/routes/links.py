@@ -1,6 +1,6 @@
 import random
 from operator import and_
-from flask import Blueprint, jsonify, redirect, request
+from flask import Blueprint, jsonify, redirect, request, current_app
 from flask_cors import cross_origin
 from string import ascii_letters, digits
 from enum import Enum, auto
@@ -9,6 +9,7 @@ from ..models.links import Link, db, load_link
 from ..models.links_anonymous import AnonymousLink
 from ..models.user import User, login_required2
 from ..models.engagements import Engagements
+import re as re
 
 links_bp = Blueprint("links_bp", __name__)
 
@@ -22,6 +23,54 @@ def create_stub(length=12):
     """Generates a random stub of specified length."""
     chars = ascii_letters + digits
     return "".join(random.choices(chars, k=length))
+
+def validate_stub_string(stub: str) -> bool:
+    # Define the regex pattern for a valid stub
+    valid_stub_regex = r'^[A-Za-z0-9\-_.~]*$'
+    
+    # Check if stub is empty or exceeds 15 characters
+    if len(stub) > 15:
+        return tuple([True, "Stub length > 15"])
+    
+    if len(stub) < 3:
+        return tuple([True, "Stub length must be minimum of 3 characters"])
+    
+    # Use regex to check if the stub contains only valid characters
+    if not re.match(valid_stub_regex, stub):
+        return tuple([True, "Stub contains invalid characters. Only A-Za-z0-9\-_.~ as allowed"])
+    
+    return tuple([False,"Stub is valid!"])
+
+
+def check_stub_validity(stub):
+    """Checks if the stub is valid and available."""
+    # Get a list of routes
+    routes = [rule.rule.strip("/").split("/") for rule in current_app.url_map.iter_rules()]
+    
+    # Flatten the list and remove duplicates
+    routes_potentially_in_use = list(set([item for sublist in routes for item in sublist]))
+    
+    # Check if the stub matches any route
+    if stub in routes_potentially_in_use:
+        return False, f"'{stub}' is a reserved route"
+    
+    # Validate stub string format
+    condition, message = validate_stub_string(stub)
+    if condition:
+        return False, message
+    
+    # Check if stub already exists in the database
+    already_exists = db.session.query(db.exists().where(Link.stub == stub)).scalar()
+    if already_exists:
+        return False, "Stub is already taken"
+    
+    return True, "Stub is valid and available!"
+
+
+def verify_stub_boolean(stub):
+    """Checks if it's a valid stub string and returns a boolean."""
+    is_valid, _ = check_stub_validity(stub)
+    return is_valid
 
 
 def create_unique_stub(length=6):
@@ -48,7 +97,7 @@ def create_link_object(user_id, data, is_anonymous=False):
     """Creates a Link or AnonymousLink instance from data."""
     LinkClass = AnonymousLink if is_anonymous else Link
     link_data = {
-        "stub": create_unique_stub(),
+        "stub": data.get("stub") if data.get("stub") and verify_stub_boolean(data.get("stub")) else create_unique_stub(),
         "long_url": data["long_url"],
     }
 
@@ -462,6 +511,12 @@ def create_engagement_route(link_id):
         db.session.rollback()
         return jsonify(message=f"Create Engagement Failed: {str(e)}", status=400), 400
 
+@links_bp.route('/verify/<stub>', methods=['GET'])
+def verify_stub(stub):
+    """Checks if it's a valid stub string and returns a response."""
+    is_valid, message = check_stub_validity(stub)
+    status = 200 if is_valid else 400
+    return jsonify(message=message, status=status), status
 
 @links_bp.route("/<stub>", methods=["GET"])
 def redirect_stub(stub):

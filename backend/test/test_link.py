@@ -164,7 +164,31 @@ class TestCustomStub(unittest.TestCase):
         self.assertEqual(self.validate_stub_string("abc 123"), (True, "Stub contains invalid characters. Only A-Za-z0-9\-_.~ as allowed"))
         self.assertEqual(self.validate_stub_string("abc-._~123"), (False, "Stub is valid!"))
 
-   
+    def mock_check_stub_validity(self, stub):
+        """Mock the check_stub_validity function."""
+        # Mock reserved routes
+        if stub in self.routes:
+            return False, f"'{stub}' is a reserved route"
+
+        # Mock existing database entries
+        mock_db_stubs = ["shorty123"]
+        if stub in mock_db_stubs:
+            return False, "Stub is already taken"
+
+        # Validate stub format
+        return self.validate_stub_string(stub)
+
+    def test_check_stub_validity(self):
+        """Test cases for check_stub_validity function."""
+        self.assertEqual(self.mock_check_stub_validity("login"), (False, "'login' is a reserved route"))
+        self.assertEqual(self.mock_check_stub_validity("shorty123"), (False, "Stub is already taken"))
+        self.assertEqual(self.mock_check_stub_validity("shorty"), (False, "Stub is valid!"))
+
+    def test_verify_stub_boolean(self):
+        """Test cases for verify_stub_boolean function."""
+        self.assertFalse(self.mock_check_stub_validity("sho$rt")[0])
+        self.assertTrue(self.mock_check_stub_validity("short")[0])
+        self.assertFalse(self.mock_check_stub_validity("home")[0])
       
 #if __name__=="__main__":
     #unittest.main()

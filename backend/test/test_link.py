@@ -189,6 +189,12 @@ class TestCustomStub(unittest.TestCase):
         self.assertFalse(self.mock_check_stub_validity("sho$rt")[0])
         self.assertTrue(self.mock_check_stub_validity("short")[0])
         self.assertFalse(self.mock_check_stub_validity("home")[0])
+        
+    def test_valid_stub_with_special_characters(self):
+        """Test a stub with all valid special characters."""
+        stub = "-_.~"
+        result = self.mock_check_stub_validity(stub)
+        self.assertEqual(result, (False, "Stub is valid!"))
       
 #if __name__=="__main__":
     #unittest.main()

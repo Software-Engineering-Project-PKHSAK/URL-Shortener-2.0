@@ -19,8 +19,9 @@ const Login = () => {
       { email, password },
       {
         onSuccess: (data) => {
-          const { user } = data || {};
+          const { user, token } = data || {};
           window.localStorage.setItem("URLshortenerUser", JSON.stringify(user));
+          window.localStorage.setItem("JSON_WEB_TOKEN", token);
           Swal.fire({
             icon: "success",
             title: "Login Successful!",

@@ -27,9 +27,6 @@ export const LinkCardItem = ({
 
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
-  let user_id = (URLshortenerUser && JSON.parse(URLshortenerUser).id) || {};
-
   const deleteLinkMutation = useDeleteLink();
 
   const handleCopy = async () => {

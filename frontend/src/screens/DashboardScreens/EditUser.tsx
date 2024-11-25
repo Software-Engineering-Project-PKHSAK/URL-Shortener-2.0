@@ -6,6 +6,7 @@ import "./styles.scss";
 
 const EditUser = () => {
   const URLshortenerUser = window.localStorage.getItem("URLshortenerUser");
+  const JSON_WEB_TOKEN = window.localStorage.getItem("JSON_WEB_TOKEN");
   const _first_name =
     URLshortenerUser && JSON.parse(URLshortenerUser).first_name;
   const _last_name = URLshortenerUser && JSON.parse(URLshortenerUser).last_name;
@@ -28,10 +29,11 @@ const EditUser = () => {
     setIsSubmitting(true);
 
     await http
-      .patch(`http://localhost:5002/user/update/${id}`, payload)
+      .patch(`http://localhost:5000/user/update/${id}`, payload)
       .then((res) => {
-        const { user } = res.data || {};
+        const { user, token } = res.data || {};
         window.localStorage.setItem("URLshortenerUser", JSON.stringify(user));
+        window.localStorage.setItem("JSON_WEB_TOKEN", token);
         Swal.fire({
           icon: "success",
           title: "Edit Successful!",

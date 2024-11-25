@@ -67,6 +67,12 @@ def check_stub_validity(stub):
     return True, "Stub is valid and available!"
 
 
+def verify_stub_boolean(stub):
+    """Checks if it's a valid stub string and returns a boolean."""
+    is_valid, _ = check_stub_validity(stub)
+    return is_valid
+
+
 def create_unique_stub(length=6):
     """Generates a unique stub that doesn't exist in the database."""
     while True:
@@ -91,7 +97,7 @@ def create_link_object(user_id, data, is_anonymous=False):
     """Creates a Link or AnonymousLink instance from data."""
     LinkClass = AnonymousLink if is_anonymous else Link
     link_data = {
-        "stub": create_unique_stub(),
+        "stub": data.get("stub") if data.get("stub") and verify_stub_boolean(data.get("stub")) else create_unique_stub(),
         "long_url": data["long_url"],
     }
 
@@ -505,6 +511,12 @@ def create_engagement_route(link_id):
         db.session.rollback()
         return jsonify(message=f"Create Engagement Failed: {str(e)}", status=400), 400
 
+@links_bp.route('/verify/<stub>', methods=['GET'])
+def verify_stub(stub):
+    """Checks if it's a valid stub string and returns a response."""
+    is_valid, message = check_stub_validity(stub)
+    status = 200 if is_valid else 400
+    return jsonify(message=message, status=status), status
 
 @links_bp.route("/<stub>", methods=["GET"])
 def redirect_stub(stub):

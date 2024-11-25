@@ -236,7 +236,7 @@ export const LinkCardItem = ({
           </div>
         </div>
         <div>
-          <QRCode id={"qr-gen"+id} value={long_url} size={100} level={"H"} />
+          <QRCode id={"qr-gen"+id} value={`${process.env.REACT_APP_API_BASE_URL}/${stub}`} size={100} level={"H"} />
         </div>
       </div>
       {tags.length > 0 && (

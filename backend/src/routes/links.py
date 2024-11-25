@@ -1,6 +1,6 @@
 import random
 from operator import and_
-from flask import Blueprint, jsonify, redirect, request
+from flask import Blueprint, jsonify, redirect, request, current_app
 from flask_cors import cross_origin
 from string import ascii_letters, digits
 from enum import Enum, auto
@@ -9,6 +9,7 @@ from ..models.links import Link, db, load_link
 from ..models.links_anonymous import AnonymousLink
 from ..models.user import User, login_required2
 from ..models.engagements import Engagements
+import re as re
 
 links_bp = Blueprint("links_bp", __name__)
 
@@ -22,6 +23,24 @@ def create_stub(length=12):
     """Generates a random stub of specified length."""
     chars = ascii_letters + digits
     return "".join(random.choices(chars, k=length))
+
+def validate_stub_string(stub: str) -> bool:
+    # Define the regex pattern for a valid stub
+    valid_stub_regex = r'^[A-Za-z0-9\-_.~]*$'
+    
+    # Check if stub is empty or exceeds 15 characters
+    if len(stub) > 15:
+        return tuple([True, "Stub length > 15"])
+    
+    if len(stub) < 3:
+        return tuple([True, "Stub length must be minimum of 3 characters"])
+    
+    # Use regex to check if the stub contains only valid characters
+    if not re.match(valid_stub_regex, stub):
+        return tuple([True, "Stub contains invalid characters. Only A-Za-z0-9\-_.~ as allowed"])
+    
+    return tuple([False,"Stub is valid!"])
+
 
 
 def create_unique_stub(length=6):

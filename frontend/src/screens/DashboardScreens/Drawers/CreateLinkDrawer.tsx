@@ -8,12 +8,16 @@ import {
   Switch,
   List,
   Typography,
-  Form
+  Form,
+  Alert
 } from "antd";
 import { useCreateLink } from "api/createLink";
+import { useVerifyStub } from "api/verifyStub";
 import { stringify } from "querystring";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useEffect } from 'react'
+import axios from "axios";
 
 const { Panel } = Collapse;
 const { Title } = Typography;
@@ -42,6 +46,29 @@ export const CreateLinkDrawer = ({
     ab_variants: []
   });
   const createLinkMutation = useCreateLink();
+
+  const [customStubString, setCustomStubString] = useState<string>("");
+  const [customStubValidation, setCustomStubValidation] = useState<string>("");
+  const { isError: vs_isError, error: vs_error, data: vs_data, refetch: vs_refetch } = useVerifyStub(customStubString);
+  
+  useEffect(() => {
+    if(!vs_isError && vs_data){
+      const _payload = { ...payload };
+      _payload["stub"] = customStubString === "" ? null : customStubString;
+      setPayload(_payload);
+    }
+  }, [vs_data])
+  console.log("Payload", payload)
+  const handleCallVerify = (buttonEvent: any) => {
+    const _payload = { ...payload };
+    if(!/^[A-Za-z0-9\-_.~]*$/.test(customStubString)){
+      setCustomStubValidation("Only A-Za-z0-9\-_.~ are allowed!")
+    } else {
+      console.log("Refetch requested");
+      vs_refetch();
+    }
+  };
+
   const handleChange = (propertyName: string, e: any) => {
     const _payload = { ...payload };
     _payload[propertyName] = e.target.value;

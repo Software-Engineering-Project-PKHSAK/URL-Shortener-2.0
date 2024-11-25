@@ -53,6 +53,10 @@ export const ViewLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
     openedLink
   );
 
+  const triggerResizeEvent = () => {
+    window.dispatchEvent(new Event("resize"));
+  };
+
   const browser_visualization_data = getbrowserVisualizationData(linkEngagements);
   // Add stylings
   const browser_barOptions = {
@@ -96,6 +100,9 @@ export const ViewLinkDrawer = ({ openedLink, setOpenedLink }: any) => {
       onClose={() => setOpenedLink(null)}
       open={openedLink}
       width={600}
+      afterOpenChange={(isOpen) => {
+        if (isOpen) triggerResizeEvent();
+      }}
     >
       <div>
         {isLoading ? (

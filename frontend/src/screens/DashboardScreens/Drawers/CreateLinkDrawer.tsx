@@ -58,7 +58,6 @@ export const CreateLinkDrawer = ({
       setPayload(_payload);
     }
   }, [vs_data])
-  console.log("Payload", payload)
   const handleCallVerify = (buttonEvent: any) => {
     const _payload = { ...payload };
     if(!/^[A-Za-z0-9\-_.~]*$/.test(customStubString)){
@@ -93,7 +92,6 @@ export const CreateLinkDrawer = ({
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    console.log("Hello rbuh", JSON.parse(JSON.stringify(payload)));
     createLinkMutation.mutate(payload, {
       onSuccess: () => {
         Swal.fire({

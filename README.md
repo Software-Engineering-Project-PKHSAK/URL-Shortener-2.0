@@ -3,42 +3,19 @@
 </p>
 
 
-
-<p align="left">
-  </a>
-  <a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic">
-
-  <a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/graphs/contributors" alt="Contributors">
-  <img src="https://img.shields.io/github/contributors/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic"/> 
-</a>
-
-<a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/python-app.yml" alt="Python application">
-<img src="https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic?branch=main"/> </a>
-<img src="https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg"/> </a>
-<a href="https://img.shields.io/badge/python-v3.9+-yellow.svg" alt="Python version">
-    <img src="https://img.shields.io/badge/python-v3.9+-yellow.svg"/> 
-</a>
-<a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0" alt="Repo size">
-    <img src="https://img.shields.io/github/repo-size/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?color=brightgreen"/> 
-</a>
-
-
-<img src="https://img.shields.io/github/languages/top/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic">
-<a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/issues">
-  <img src="https://img.shields.io/github/issues-raw/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic">
-</a>
-
-<img align="center" src="https://img.shields.io/badge/postgres-%23316192.svg?logo=postgresql&logoColor=white"/> </a>
-<img src="https://img.shields.io/badge/flask-%23000.svg?logo=flask&logoColor=white"/>
-<img src="https://img.shields.io/badge/react-%2320232a.svg?logo=react&logoColor=%2361DAFB"/>
-<a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/deno.yml">
-  <img src="https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white"/>
-</a>
-</p>
-
+[![License](https://img.shields.io/github/license/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main/LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/graphs/contributors)
+[![Python application](https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic&branch=main)](https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/python-app.yml)
+[![Codecov](https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg)](https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/)
+[![Python version](https://img.shields.io/badge/python-v3.9+-yellow.svg)](https://img.shields.io/badge/python-v3.9+-yellow.svg)
+[![Repo size](https://img.shields.io/github/repo-size/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?color=brightgreen)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0)
+[![Top language](https://img.shields.io/github/languages/top/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0)
+[![Issues](https://img.shields.io/github/issues-raw/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/issues)
+[![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Flask](https://img.shields.io/badge/flask-%23000.svg?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
+[![Codecov](https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/deno.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14226287.svg)](https://doi.org/10.5281/zenodo.14226287)
-
 
 # ✂️ **URL Shortener**: Simplify, Share, Succeed! 🌐
 
@@ -90,18 +67,20 @@ https://github.com/user-attachments/assets/5094efe1-5a2b-47c3-8353-e98d873a37c7
 <a href="https://ant.design/"><img src="https://img.shields.io/badge/Ant%20Design-1890FF?style=for-the-badge&logo=antdesign&logoColor=white" /></a>
 <a href="https://www.heroku.com/"><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" /></a>
 
+## License
+Distributed under the MIT License. See LICENSE for more information.
+[MIT](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main-development/LICENSE)
+
 ## Getting started 
 - Open your terminal on any Windows/Linux device
 - Clone the repository using the command 
-
-git clone https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0
-
+- For detailed instructions on how to install the project, please refer to the [Installation section](#installation)
 
 ## Installation:
 For installing the necessary libraries click on the links below for step by step procedure:
 
-- Backend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/prateek-update/backend/README.md)
-- Frontend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/prateek-update/frontend/README.md)
+- Backend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main-development/backend/README.md)
+- Frontend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main-development/frontend/README.md)
 
 ## Some of our Current Screens
 <p>
@@ -144,23 +123,35 @@ For installing the necessary libraries click on the links below for step by step
 </ul>
 
 ## Phase 4
+#### Features: ⭐
 <ul>
-  <li>A/B Testing: Introduce multiple variants of redirection URLs with customizable weights to enable A/B testing. View live analysis directly on your dashboard!
-<li>Device Details: Retrieve detailed device information, including type (Desktop, Mobile, etc.), operating system, and browser (name and version), when using our engagement API. (Coming soon to the front end!)</li>
-<li>Copy QR Code: Easily copy QR codes as SVGs directly from the dashboard, simplifying integration into your app.</li>
+  <li><b>A/B Testing</b>: Introduce multiple variants of redirection URLs with customizable weights to enable A/B testing. View live analysis directly on your dashboard!</li>
+  <li><b>JWT Implementation for Enhanced Security</b>: Replaced session-based user-id references with JSON Web Tokens (JWT) for secure backend and API communication, enhancing authorization and session management.</li>
+  <li><b>Link Analytics</b>: Retrieve detailed device information, including type (Desktop, Mobile, etc.), operating system, and browser (name and version), when using our engagement API.</li>
+  <li><b>Custom URL Stub</b>: Allow users to create personalized short URLs by setting their own custom aliases, validated using our stub validation API.</li>
+  <li><b>Copy QR Code</b>: Easily copy QR codes as SVGs directly from the dashboard, simplifying integration into your app.</li>
 </ul>
 
-## Future Scope
-<ul>
-  <li>Display charts to show engagement analytics using UTM parameters</li>
-  <li>Country/Region targeting</li>
-</ul>
-
-## Bugfixes: 🏹🐞
+#### Bugfixes: 🏹🐞
 <ul>
   <li> Fixed an issue where redirection failed for non-fully qualified URLs (e.g., missing https://).</li>
   <li>Editing a link now pre-fills all existing properties, so you no longer need to remember or re-enter them.</li>
   <li>Resolved a bug with the Enabled state on the edit screen to ensure it works reliably.</li>
+</ul>
+
+## Future Scope
+<ul>
+  <li><b>Safe URL Detection</b>: In the future, the system could be enhanced to automatically detect and flag potentially unsafe URLs by integrating advanced security checks, such as phishing detection, malware scanning, and domain reputation analysis. This feature would help ensure that only safe, trustworthy links are shared, improving user safety and trust in the platform.</li>
+  
+  <li><b>Country/Region targeting</b>: Future enhancements could include advanced targeting capabilities, allowing users to customize content or services based on specific countries or regions. This could involve integrating geolocation data, local preferences, and regulatory compliance to deliver more relevant and personalized experiences.</li>
+
+  <li><b>Password Protection for Links</b>: Introduce password protection for shortened links, allowing users to set passwords for private or sensitive URLs. This feature would enhance security by ensuring only authorized individuals can access the content behind the shortened link, providing an additional layer of control and privacy for users.</li>
+
+  <li><b>Link Expiry Notifications</b>: Implement a system to notify users before their shortened URL expires, giving them the option to extend or modify the expiration settings.</li>
+
+  <li><b>Link Collaboration and Sharing</b>: Allow users to collaborate on managing and sharing shortened URLs with teams or groups, making it easier for businesses or teams to manage multiple links collectively.</li>
+
+  <li><b>Advanced Link Analytics</b>: Implement detailed analytics features such as time-of-day tracking, referrer sources, and real-time click monitoring, giving users deeper insights into their link performance.</li>
 </ul>
 
 ## Contributions to the Project
@@ -171,24 +162,29 @@ Our project is currently not funded, and we operate on a volunteer and open-sour
 
 ## Need help?
 Found a bug, have a new feature idea or need help with running or deploying the software? Please create an Issue to notify us.
-Email any queries to the contributors -
+Email any queries to the contributors - [Akarsh Reddy](aeatham@ncsu.edu), [Prateek Kamath](pnkamath@ncsu.edu), [Himanshu Singh](hsingh25@ncsu.edu)
 
-1. [Akarsh Reddy](aeatham@ncsu.edu)
-2. [Himanshu Singh](hsingh25@ncsu.edu)
-3. [Prateek N Kamath](pnkamath@ncsu.edu)
+### Developers (New Version)
 
-## Original Authors 
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/akarsh16reddy"><img src="https://avatars.githubusercontent.com/u/63505953?v=4" width="100px;" alt=""/><br /><sub><b>Akarsh Reddy, Eathamukkala</b></sub></a></td>
+    <td align="center"><a href="https://github.com/PrateekKamath"><img src="https://avatars.githubusercontent.com/u/92785050?v=4" width="100px;" alt=""/><br /><sub><b>Prateek Kamath</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/123standup"><img src="https://avatars.githubusercontent.com/u/24963056?v=4" width="100px;" alt=""/><br /><sub><b>Himanshu Singh</b></sub></a><br /></td>
+  </tr>
+</table>
+
+
+### Developers (Last Version)
+
+1. [Bhavishya Tarun](btarun@ncsu.edu)
+2. [Archit Gupta](agupta85@ncsu.edu)
+3. [Vyom Patel](vbpatel3@ncsu.edu)
+
+### Developers (Penultimate Version)
 
 1. [Kritika Javali](https://github.com/ksjavali)
 2. [Swarangi Gaurkar](https://github.com/Swarangigaurkar)
 3. [Aaron Dias Barreto](https://github.com/aaron278)
 4. [Leo Hsiang](https://github.com/leoohsiang)
 5. [Damilola Babalola](https://github.com/JohnDamilola)
-6. [Bhavishya Tarun](btarun@ncsu.edu)
-7. [Archit Gupta](agupta85@ncsu.edu)
-8. [Vyom Patel](vbpatel3@ncsu.edu)
-
-## License
-Distributed under the MIT License. See LICENSE for more information.
-[MIT](https://tldrlegal.com/license/mit-license)
-

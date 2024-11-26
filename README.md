@@ -179,5 +179,6 @@ Email any queries to the contributors -
 8. [Vyom Patel](vbpatel3@ncsu.edu)
 
 ## License
+Distributed under the MIT License. See LICENSE for more information.
 [MIT](https://tldrlegal.com/license/mit-license)
 

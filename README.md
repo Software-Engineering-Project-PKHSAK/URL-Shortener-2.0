@@ -159,8 +159,8 @@ Please refer to the [Contributing.md](https://github.com/Software-Engineering-Pr
 ## Project Funding
 Our project is currently not funded, and we operate on a volunteer and open-source basis, and currently, improvement of the project solely relies on the dedication of our team and contributions from the open-source community.
 
-## Help
-
+## Need help?
+Found a bug, have a new feature idea or need help with running or deploying the software? Please create an Issue to notify us.
 Email any queries to the contributors -
 
 1. [Akarsh Reddy](aeatham@ncsu.edu)
@@ -181,5 +181,3 @@ Email any queries to the contributors -
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 
-## Funding
-Our project at the moment is not funded by any organization/individual.

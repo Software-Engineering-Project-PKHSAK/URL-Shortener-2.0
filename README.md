@@ -9,7 +9,10 @@
     <img src="https://img.shields.io/github/license/johndamilola/URL-Shortener-2.0?style=plastic"></a>
   <img src="https://img.shields.io/github/languages/count/johndamilola/URL-Shortener-2.0">
   <a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/people" alt="Contributors">
-<img src="https://img.shields.io/github/contributors/JohnDamilola/URL-Shortener-2.0?style=plastic"/> </a>
+  <a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/graphs/contributors" alt="Contributors">
+  <img src="https://img.shields.io/github/contributors/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic"/> 
+</a>
+
 <a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/python-app.yml" alt="Python application">
 <img src="https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic?branch=main"/> </a>
 <img src="https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg"/> </a>

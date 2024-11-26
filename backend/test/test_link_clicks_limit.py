@@ -2,18 +2,23 @@ import sys
 
 sys.path.append("backend/src")
 import unittest
-from models.links import Link, db
-from app import create_app
-from models.user import User
+from backend.src.models.links import Link, db
+from backend.src.app import create_app, config
+from backend.src.models.user import User
+from backend.src.routes.links import create_unique_stub
 import uuid
-
+import jwt
 
 class LinkAutoDeactivationTest(unittest.TestCase):
     def setUp(self):
-        self.flask_app = create_app()
+        self.flask_app = create_app("testing")
         self.app = self.flask_app.test_client()
         with self.flask_app.app_context():
             db.create_all()
+            existing_user = User.query.filter_by(email="test_user@example.com").first()
+            if existing_user:
+                db.session.delete(existing_user)
+                db.session.commit()
             # Create a test user
             user = User(
                 id=str(uuid.uuid4()),
@@ -25,6 +30,7 @@ class LinkAutoDeactivationTest(unittest.TestCase):
             db.session.add(user)
             db.session.commit()
             self.user_id = user.id
+            self.token = jwt.encode({'user_id': str(user.id)}, self.flask_app.config['SECRET_KEY'], "HS256")
 
     def tearDown(self):
         with self.flask_app.app_context():
@@ -41,6 +47,7 @@ class LinkAutoDeactivationTest(unittest.TestCase):
             "max_visits": None,
             "visit_count": 0,
             "disabled": False,
+            "stub": create_unique_stub()
         }
         default_params.update(kwargs)
         return Link(**default_params)
@@ -101,7 +108,7 @@ class LinkAutoDeactivationTest(unittest.TestCase):
         """Test link access behavior when disabled."""
         self.app.post(
             "/auth/login",
-            json=dict(email="test_user@example.com", password="password123"),
+            json=dict(email="test_user1@example.com", password="password123"),
         )
 
         with self.flask_app.app_context():
@@ -109,7 +116,7 @@ class LinkAutoDeactivationTest(unittest.TestCase):
             db.session.add(link)
             db.session.commit()
 
-            response = self.app.get(f"/links/stub/{link.stub}")
+            response = self.app.get(f"/{link.stub}")
             self.assertEqual(response.status_code, 403)
             self.assertIn(b"This link has been disabled.", response.data)
 
@@ -120,7 +127,8 @@ class LinkAutoDeactivationTest(unittest.TestCase):
             {"long_url": "https://example2.com", "title": "Example 2", "max_visits": 2},
         ]
         response = self.app.post(
-            "/links/create_bulk", json=dict(user_id=self.user_id, links=bulk_links)
+            "/links/create_bulk", json=dict(user_id=self.user_id, links=bulk_links),
+            headers={"Authorization": f"Bearer {self.token}"}
         )
         self.assertEqual(response.status_code, 201)
 

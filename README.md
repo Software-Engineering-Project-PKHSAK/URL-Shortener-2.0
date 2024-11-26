@@ -4,11 +4,11 @@
 
 
 
-<p align="center">
-  <a href="https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/johndamilola/URL-Shortener-2.0?style=plastic"></a>
-  <img src="https://img.shields.io/github/languages/count/johndamilola/URL-Shortener-2.0">
-  <a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/people" alt="Contributors">
+<p align="left">
+  </a>
+  <a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic">
+
   <a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/graphs/contributors" alt="Contributors">
   <img src="https://img.shields.io/github/contributors/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic"/> 
 </a>
@@ -17,17 +17,24 @@
 <img src="https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic?branch=main"/> </a>
 <img src="https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg"/> </a>
 <a href="https://img.shields.io/badge/python-v3.9+-yellow.svg" alt="Python version">
-<img src="https://img.shields.io/badge/python-v3.9+-yellow.svg"/> </a>
-<a href="https://img.shields.io/github/repo-size/JohnDamilola/URL-Shortener-2.0?color=brightgreen" alt="Repo size">
-<img src="https://img.shields.io/github/repo-size/JohnDamilola/URL-Shortener-2.0?color=brightgreen"/> </a>
-<img src="https://img.shields.io/github/languages/top/JohnDamilola/URL-Shortener-2.0?style=plastic">
-<a href="https://github.com/JohnDamilola/URL-Shortener-2.0/issues">
-  <img src="https://img.shields.io/github/issues-raw/johndamilola/URL-Shortener-2.0?style=plastic"></a>
+    <img src="https://img.shields.io/badge/python-v3.9+-yellow.svg"/> 
+</a>
+<a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0" alt="Repo size">
+    <img src="https://img.shields.io/github/repo-size/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?color=brightgreen"/> 
+</a>
+
+
+<img src="https://img.shields.io/github/languages/top/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic">
+<a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/issues">
+  <img src="https://img.shields.io/github/issues-raw/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic">
+</a>
 
 <img align="center" src="https://img.shields.io/badge/postgres-%23316192.svg?logo=postgresql&logoColor=white"/> </a>
 <img src="https://img.shields.io/badge/flask-%23000.svg?logo=flask&logoColor=white"/>
 <img src="https://img.shields.io/badge/react-%2320232a.svg?logo=react&logoColor=%2361DAFB"/>
-<a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/deno.yml"> <img src="https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white"/>
+<a href="https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/deno.yml">
+  <img src="https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white"/>
+</a>
 </p>
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14226287.svg)](https://doi.org/10.5281/zenodo.14226287)

@@ -197,7 +197,7 @@ def create_engagement(link_id, data):
     db.session.add(engagement)
     return engagement
 
-def create_engagement_from_link_and_user_agent(link, user_agent):
+def create_engagement_from_link_and_user_agent(link, url_to_redirect_to, user_agent):
     """Creates a new engagement record from link and user agent."""
     ua_os, ua_browser, ua_device_type = get_device_properties(user_agent)
     engagement = Engagements(
@@ -207,7 +207,7 @@ def create_engagement_from_link_and_user_agent(link, user_agent):
         utm_campaign=link.utm_campaign,
         utm_term=link.utm_term,
         utm_content=link.utm_content,
-        long_url = link.long_url,
+        long_url = url_to_redirect_to,
         device_type = ua_device_type,
         device_os = ua_os,
         device_browser = ua_browser
@@ -539,7 +539,7 @@ def redirect_stub(stub):
                 url_to_redirect_to = get_random_url_for_ab(link)
 
             user_agent = user_agent_parser(request.headers.get("User-Agent"))
-            create_engagement_from_link_and_user_agent(link, user_agent)
+            create_engagement_from_link_and_user_agent(link, url_to_redirect_to, user_agent)
             link.visit_count += 1
             db.session.commit()
             

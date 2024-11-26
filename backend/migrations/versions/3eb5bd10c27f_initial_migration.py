@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 11f0783fbad5
+Revision ID: 3eb5bd10c27f
 Revises: 
-Create Date: 2024-11-14 19:53:54.478636
+Create Date: 2024-11-25 20:33:51.869926
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '11f0783fbad5'
+revision = '3eb5bd10c27f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -57,6 +57,7 @@ def upgrade():
     sa.Column('max_visits', sa.Integer(), nullable=True),
     sa.Column('tags', sa.ARRAY(sa.String(length=50)), nullable=True),
     sa.Column('user_id', postgresql.UUID(as_uuid=True), nullable=True),
+    sa.Column('ab_variants', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('stub')
@@ -71,7 +72,11 @@ def upgrade():
     sa.Column('created_on', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_on', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('link_id', postgresql.UUID(as_uuid=True), nullable=True),
-    sa.ForeignKeyConstraint(['link_id'], ['links.id'], ),
+    sa.Column('long_url', sa.String(length=100), nullable=True),
+    sa.Column('device_os', sa.String(length=100), nullable=True),
+    sa.Column('device_browser', sa.String(length=100), nullable=True),
+    sa.Column('device_type', sa.String(length=100), nullable=True),
+    sa.ForeignKeyConstraint(['link_id'], ['links.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

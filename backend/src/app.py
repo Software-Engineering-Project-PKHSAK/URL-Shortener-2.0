@@ -47,10 +47,10 @@ except ImportError:
     from routes.links import links_bp
     from models.user import User, login_manager
 
-def create_app():
+def create_app(config_name="development"):
     """Create Flask application."""
     app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object(config['development'])
+    app.config.from_object(config[config_name])
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     register_blueprints(app)
     register_extensions(app)

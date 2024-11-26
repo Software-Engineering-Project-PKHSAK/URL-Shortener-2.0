@@ -1,14 +1,23 @@
 import sys
 sys.path.append('backend/src')
 import unittest
-from models.user import User
-from routes.auth import auth_bp
-from app import app
+from backend.src.models.user import User
+from backend.src.routes.auth import auth_bp
+from backend.src.app import create_app
+from backend.src.extensions import db
+
 
 class AuthTestApp(unittest.TestCase):
     def setUp(self):
-        self.flask_app=app
+        self.flask_app=create_app("testing")
         self.app=self.flask_app.test_client()
+        with self.flask_app.app_context():
+            db.create_all()
+
+    def tearDown(self):
+        with self.flask_app.app_context():
+            db.session.remove()
+            db.drop_all()
 
     def test_register_route_new_user(self):
         '''Test the register route of our app with an unregistered user'''
@@ -17,6 +26,7 @@ class AuthTestApp(unittest.TestCase):
         
     def test_register_route_old_user(self):
         '''Test the register route of our app with an already registered user'''
+        response=self.app.post('/auth/register',json=dict(email='test1@gmail.com',first_name='test1_first',last_name='test1_last',password='password1'))
         response=self.app.post('/auth/register',json=dict(email='test1@gmail.com',first_name='test1_first',last_name='test1_last',password='password1'))
         assert response.status_code==400
   

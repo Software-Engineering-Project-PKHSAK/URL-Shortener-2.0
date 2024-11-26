@@ -1,18 +1,15 @@
-cff-version: 1.2.0
+cff-version: 1.3.0
 message: "If the code for this repository is used, please cite it as below"
 authors:
-- family-names: "Javali"
-  given-names: "Kritika"
-- family-names: "Gaurkar"
-  given-names: "Swarangi"
-- family-names: "Dias Barreto"
-  given-names: "Aaron"
-- family-names: "Hsiang"
-  given-names: "Leo" 
-- family-names: "Babalola"
-  given-names: "Damilola" 
+- family-names: "Reddy"
+  given-names: "Akarsh"
+- family-names: "Singh"
+  given-names: "Himanshu"
+- family-names: "Kamath"
+  given-names: "Prateek"
+
 title: "URL Shortner 2.0"
-version: 1.0
-doi: 10.5281/zenodo.7113667
-date-released: 2022-11-13
-url: "https://github.com/JohnDamilola/URL-Shortner-2.0"
+version: 3.0
+doi: 10.5281/zenodo.14226287
+date-released: 2024-11-26
+url: "https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0"

@@ -1,9 +1,8 @@
 <p align="center">
-  <img
-    width="200"
-    alt="URL Shortener 3.0"
-  />
+  <img src="https://github.com/user-attachments/assets/12d684be-2f8a-49be-b49d-f56170053439" alt="URL_Shortener" width="350">
 </p>
+
+
 
 <p align="center">
   <a href="https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/LICENSE">
@@ -28,9 +27,32 @@
 <a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/deno.yml"> <img src="https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white"/>
 </p>
 
+# ✂️ **URL Shortener**: Simplify, Share, Succeed! 🌐
 
-## Description
-Do you wish you could convert your long urls to a short and easy-to-remember custom one? With tools like tracking number of visits, password protecting links, bulk creation of links and easy filtering. Then URL-Shortner-3.0 is exactly what you need!
+In today’s fast-paced digital world, first impressions matter – even when it comes to your links. 🚀 **URL Shortener** is here to revolutionize the way you share information by transforming long, complex URLs into clean, concise, and easy-to-share links that fit perfectly in any context. Whether it’s for social media posts, email campaigns, or personal sharing, our tool ensures your links are not just shorter but smarter. 💡
+
+## 🔥 **Why Choose URL Shortener?**
+- **✨ Simplicity Meets Elegance:** Turn clunky URLs into sleek, professional-looking links in just a click.  
+- **📊 Real-Time Analytics:** Track clicks, user engagement, and geographical data to gain insights into your audience.  
+- **🔒 Secure and Reliable:** All links are encrypted and backed by robust servers, ensuring privacy and reliability.  
+- **🎯 Perfect for Every Need:** From marketers tracking campaigns to developers sharing APIs, our URL shortener fits every use case.  
+- **🛠️ Fully Customizable:** Create branded or custom URLs that reflect your identity and make them unforgettable.
+
+## 🚀 **Power Features**
+- **QR Code Generation:** Need offline sharing? Generate QR codes for your shortened URLs effortlessly.  
+- **Expiry Dates:** Set expiration dates for temporary links to maintain control over shared content.  
+- **Bulk URL Shortening:** Save time by shortening multiple URLs at once.  
+- **API Integration:** Seamlessly integrate our service into your own applications for automated URL shortening.
+
+## 🌟 **Your Links, Simplified**
+Say goodbye to overwhelming character limits and hello to streamlined sharing! Whether you’re managing a business campaign, sharing a personal favorite, or simplifying content distribution, **URL Shortener** is your go-to tool for maximizing impact with minimal effort.
+
+💻 **Try it today and experience the difference!** Shorten your first URL now and take the first step toward cleaner, smarter, and more impactful sharing. 🔗✨
+
+
+
+
+
 
 ## Watch what makes URL-Shortener-3.0 amazing!
 
@@ -55,9 +77,18 @@ https://github.com/user-attachments/assets/5094efe1-5a2b-47c3-8353-e98d873a37c7
 <a href="https://ant.design/"><img src="https://img.shields.io/badge/Ant%20Design-1890FF?style=for-the-badge&logo=antdesign&logoColor=white" /></a>
 <a href="https://www.heroku.com/"><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" /></a>
 
-## Getting started & Installation:
-- Backend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/backend/README.md)
-- Frontend [See README.md](https://github.com/CSC510SEFall24/URL-Shortener-2.0/blob/main/frontend/README.md)
+## Getting started 
+- Open your terminal on any Windows/Linux device
+- Clone the repository using the command 
+
+git clone https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0
+
+
+## Installation:
+For installing the necessary libraries click on the links below for step by step procedure:
+
+- Backend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/prateek-update/backend/README.md)
+- Frontend [See README.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/prateek-update/frontend/README.md)
 
 ## Some of our Current Screens
 <p>
@@ -99,22 +130,36 @@ https://github.com/user-attachments/assets/5094efe1-5a2b-47c3-8353-e98d873a37c7
   <li>View analytics for your links</li>
 </ul>
 
+## Phase 4
+<ul>
+  <li>A/B Testing: Introduce multiple variants of redirection URLs with customizable weights to enable A/B testing. View live analysis directly on your dashboard!
+<li>Device Details: Retrieve detailed device information, including type (Desktop, Mobile, etc.), operating system, and browser (name and version), when using our engagement API. (Coming soon to the front end!)</li>
+<li>Copy QR Code: Easily copy QR codes as SVGs directly from the dashboard, simplifying integration into your app.</li>
+</ul>
+
 ## Future Scope
 <ul>
   <li>Display charts to show engagement analytics using UTM parameters</li>
   <li>Country/Region targeting</li>
 </ul>
 
+## Bugfixes: 🏹🐞
+<ul>
+  <li> Fixed an issue where redirection failed for non-fully qualified URLs (e.g., missing https://).</li>
+  <li>Editing a link now pre-fills all existing properties, so you no longer need to remember or re-enter them.</li>
+  <li>Resolved a bug with the Enabled state on the edit screen to ensure it works reliably.</li>
+</ul>
+
 ## Contributions to the Project
-Please refer to the [Contributing.md](https://github.com/JohnDamilola/URL-Shortener-2.0/blob/main/Contributing.md) if you want to contrbute to the URL Shortener source code. Follow all the guidelines mentioned and raise a pull request for the developers to review before the code goes to the main source code.
+Please refer to the [Contributing.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main-development/Contributing.md) if you want to contrbute to the URL Shortener source code. Follow all the guidelines mentioned and raise a pull request for the developers to review before the code goes to the main source code.
 
 ## Help
 
 Email any queries to the contributors -
-1. [Bhavishya Tarun](btarun@ncsu.edu)
-2. [Archit Gupta](agupta85@ncsu.edu)
-3. [Vyom Patel](vbpatel3@ncsu.edu)
 
+1. [Akarsh Reddy](aeatham@ncsu.edu)
+2. [Himanshu Singh](hsingh25@ncsu.edu)
+3. [Prateek N Kamath](pnkamath@ncsu.edu)
 
 ## Original Authors 
 
@@ -123,6 +168,9 @@ Email any queries to the contributors -
 3. [Aaron Dias Barreto](https://github.com/aaron278)
 4. [Leo Hsiang](https://github.com/leoohsiang)
 5. [Damilola Babalola](https://github.com/JohnDamilola)
+6. [Bhavishya Tarun](btarun@ncsu.edu)
+7. [Archit Gupta](agupta85@ncsu.edu)
+8. [Vyom Patel](vbpatel3@ncsu.edu)
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)

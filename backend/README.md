@@ -1,9 +1,10 @@
 Steps to run the backend project
 
 ### Initial Project setup
-1. python -m venv env
-2. source env/bin/activate
-3. pip install -r requirements.txt
+1. sudo apt install -y     build-essential     libssl-dev     zlib1g-dev     libbz2-dev     libreadline-dev     libsqlite3-dev     wget     curl     llvm     libncurses5-dev     libncursesw5-dev     xz-utils     tk-dev     libffi-dev     liblzma-dev     python3-dev     libgdbm-dev     libnss3-dev     libssl-dev     libgdbm-compat-dev
+2. pyenv install 3.10.14
+3. cd backend
+4.  pip install -r requirements.txt 
 
 ### Local DB setup
 4. psql
@@ -19,11 +20,11 @@ create database url_shortener;
 
 8. flask run
 
-   OR
-
 ### Heroku setup
-8. git remote add heroku https://git.heroku.com/url-shortener-server-api.git
+
+9. git remote add heroku https://git.heroku.com/url-shortener-server-api.git
 
 ### Heroku deployment
-9. cd ../ && git subtree push --prefix backend heroku main
-10. heroku run flask db upgrade
+10. cd ../ && git subtree push --prefix backend heroku main
+heroku run flask db upgrade
+

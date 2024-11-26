@@ -27,6 +27,9 @@
 <a href="https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/deno.yml"> <img src="https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white"/>
 </p>
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14226287.svg)](https://doi.org/10.5281/zenodo.14226287)
+
+
 # ✂️ **URL Shortener**: Simplify, Share, Succeed! 🌐
 
 In today’s fast-paced digital world, first impressions matter – even when it comes to your links. 🚀 **URL Shortener** is here to revolutionize the way you share information by transforming long, complex URLs into clean, concise, and easy-to-share links that fit perfectly in any context. Whether it’s for social media posts, email campaigns, or personal sharing, our tool ensures your links are not just shorter but smarter. 💡
@@ -152,6 +155,9 @@ For installing the necessary libraries click on the links below for step by step
 
 ## Contributions to the Project
 Please refer to the [Contributing.md](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main-development/Contributing.md) if you want to contrbute to the URL Shortener source code. Follow all the guidelines mentioned and raise a pull request for the developers to review before the code goes to the main source code.
+
+## Project Funding
+Our project is currently not funded, and we operate on a volunteer and open-source basis, and currently, improvement of the project solely relies on the dedication of our team and contributions from the open-source community.
 
 ## Help
 

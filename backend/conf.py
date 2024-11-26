@@ -6,11 +6,11 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'URL Shortener 2.0'
-copyright = '2022, John Damilola, Leo Hsiang, Swarangi Gaurkar, Kritka Javali, Aaron Dias Barreto'
-author = 'John Damilola, Leo Hsiang, Swarangi Gaurkar, Kritika Javali, Aaron Dias Barreto'
+project = 'URL Shortener 3.0'
+copyright = '2024, Akarsh Reddy, Himanshu Singh and Prateek Kamath'
+author = 'Akarsh Reddy, Himanshu Singh and Prateek Kamath'
 
-version = '1'
+version = '3'
 release = '1'
 
 # -- General configuration ---------------------------------------------------

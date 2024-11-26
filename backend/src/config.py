@@ -26,7 +26,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = 'this-really-needs-to-be-changed'
+    SECRET_KEY = '178a204de99812c4662f161723b989e0dcc86b888472aa4cfdb2bf9df8ff3db9'
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     except KeyError:
@@ -45,6 +45,8 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+    SECRET_KEY = '178a204de99812c4662f161723b989e0dcc86b888472aa4cfdb2bf9df8ff3db9'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@localhost:5432/test_url_shortener'
     
 config = {
     'development': DevelopmentConfig,

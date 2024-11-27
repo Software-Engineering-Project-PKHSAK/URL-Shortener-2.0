@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main/LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/graphs/contributors)
 [![Python application](https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic&branch=main)](https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/python-app.yml)
-[![Codecov](https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg)](https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/)
+[![Codecov](https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg)](https://codecov.io/github/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/)
 [![Python version](https://img.shields.io/badge/python-v3.9+-yellow.svg)](https://img.shields.io/badge/python-v3.9+-yellow.svg)
 [![Repo size](https://img.shields.io/github/repo-size/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?color=brightgreen)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0)
 [![Top language](https://img.shields.io/github/languages/top/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0)
@@ -15,6 +15,9 @@
 [![Flask](https://img.shields.io/badge/flask-%23000.svg?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![React](https://img.shields.io/badge/react-%2320232a.svg?logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
 [![Codecov](https://img.shields.io/badge/codecov-%23ff0077.svg?logo=codecov&logoColor=white)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/deno.yml)
+[![Autopep8](https://img.shields.io/badge/formatter-autopep8-red?link=https%3A%2F%2Fgithub.com%2FSoftware-Engineering-Project-PKHSAK%2FURL-Shortener-2.0%2Factions%2Fworkflows%2Fautopep8.yml)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/autopep8.yml)
+[![Pyflakes](https://img.shields.io/badge/syntax_check-pyflakes-%2333c461?link=https%3A%2F%2Fgithub.com%2FSoftware-Engineering-Project-PKHSAK%2FURL-Shortener-2.0%2Factions%2Fworkflows%2Fpyflakes.yml)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/pyflakes.yml)
+[![linting: pylint](https://img.shields.io/badge/linting-pylint-green)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/pylint.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14226287.svg)](https://doi.org/10.5281/zenodo.14226287)
 
 # ✂️ **URL Shortener**: Simplify, Share, Succeed! 🌐
@@ -59,12 +62,14 @@ https://github.com/user-attachments/assets/5094efe1-5a2b-47c3-8353-e98d873a37c7
 
 
 ## Tech Stack
+<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"/></a>
 <a href="https://flask.palletsprojects.com/en/2.2.x/"><img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" /></a>
 <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" /></a>
 <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /></a>
 <a href="https://firebase.google.com/"><img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" /></a>
 <a href="https://github.com/"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /></a>
 <a href="https://ant.design/"><img src="https://img.shields.io/badge/Ant%20Design-1890FF?style=for-the-badge&logo=antdesign&logoColor=white" /></a>
+<a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white" /></a>
 <a href="https://www.heroku.com/"><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" /></a>
 
 ## License

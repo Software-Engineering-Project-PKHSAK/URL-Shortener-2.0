@@ -5,7 +5,7 @@
 
 [![License](https://img.shields.io/github/license/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/blob/main/LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?style=plastic)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/graphs/contributors)
-[![Python application](https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic&branch=main)](https://github.com/CSC510SEFall24/URL-Shortener-2.0/actions/workflows/python-tests.yml)
+[![Python application](https://github.com/JohnDamilola/URL-Shortener-2.0/actions/workflows/test.yml/badge.svg?style=plastic&branch=main)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/actions/workflows/python-tests.yml)
 [![Codecov](https://codecov.io/github/JohnDamilola/URL-Shortener-2.0/branch/main/graph/badge.svg)](https://codecov.io/github/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0/)
 [![Python version](https://img.shields.io/badge/python-v3.9+-yellow.svg)](https://img.shields.io/badge/python-v3.9+-yellow.svg)
 [![Repo size](https://img.shields.io/github/repo-size/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0?color=brightgreen)](https://github.com/Software-Engineering-Project-PKHSAK/URL-Shortener-2.0)

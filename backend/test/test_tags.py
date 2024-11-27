@@ -39,7 +39,7 @@ class TestTaggingFeature(unittest.TestCase):
                 # Include the token in the Authorization header
                 'Authorization': f'Bearer {self.token}'
             }
-            
+
     def tearDown(self):
         with self.app.app_context():
             db.session.remove()
@@ -106,8 +106,8 @@ class TestTaggingFeature(unittest.TestCase):
             created_link = Link.query.filter_by(long_url="https://tagquery.com").first()
             print("Created link tags:", created_link.tags)  # Print the tags to check
 
-            link_id = created_link.idgit
-            
+            link_id = created_link.id
+
             response = self.client.get('/links/' + str(link_id))
             self.assertEqual(response.status_code, 200)
 

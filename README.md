@@ -178,14 +178,19 @@ For installing the necessary libraries click on the links below for step by step
 
 #### Videos: :movie_camera:
 - **A/B Testing**
+  
   ![alt "A/B Test"](./phase_4_gifs/ab_test.gif)
 - **Dashboard Analytics**
+  
   ![alt "Dashboard Analytics"](./phase_4_gifs/dashboard_analytics.gif)
 - **Custom URL Stub**
+  
   ![alt "Custom URL Stub"](./phase_4_gifs/validate_stub.gif)
 - **Copy QR**
+  
   ![alt "Copy QR"](./phase_4_gifs/copy_qr.gif)
 - **JWT Token**
+  
   ![alt "JWT Token"](./phase_4_gifs/jwt_auth.gif)
 
 ## Future Scope

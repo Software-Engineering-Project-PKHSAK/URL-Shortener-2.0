@@ -112,6 +112,38 @@ For installing the necessary libraries click on the links below for step by step
 
 </p>
 
+## Target Audiences of a URL Shortener
+
+### **1. Marketers and Businesses**
+- **Digital Marketers:** To create concise, trackable links for campaigns, email marketing, or social media posts.
+- **Brand Managers:** To enhance brand identity using custom short URLs with branded domains.
+- **E-commerce Businesses:** To share product or promotional links that are easy to remember and track.
+
+### **2. Social Media Users**
+- **Content Creators and Influencers:** To make links more visually appealing and shareable on platforms with character limits (e.g., Twitter).
+- **Social Media Managers:** To monitor the performance of shared links through analytics.
+
+### **3. Educators and Researchers**
+- **Educators:** To share easy-to-remember links to resources or assignments with students.
+- **Researchers:** To cite or distribute long links for studies, reports, or collaborative tools.
+
+### **4. Developers and IT Professionals**
+- **Developers:** For creating APIs or microservices with short, efficient URLs.
+- **System Administrators:** To manage and track links in internal tools or knowledge bases.
+
+### **5. Event Organizers**
+- To share links to event registrations, schedules, or online meeting platforms.
+
+### **6. News and Media**
+- **Journalists:** To share links to articles or sources without cluttering text.
+- **News Outlets:** For link tracking and improved readability in digital publications.
+### **7. Nonprofits and Activists**
+- **Nonprofits:** To share donation links or campaign details with concise, branded URLs.
+- **Activists:** To distribute petition links or event details efficiently.
+
+### **8. Everyday Internet Users**
+- To share links with friends or groups for personal use, such as in messaging apps or emails.
+
 ## Phase 1 Features
 <ul>
   <li>Anonymous short links creation (without login)</li>

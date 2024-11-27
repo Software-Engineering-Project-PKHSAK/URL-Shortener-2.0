@@ -35,6 +35,9 @@ except ImportError:
     from models.user import User, db, load_user
     from extensions import bcrypt
 import jwt
+import json
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
 
 auth_bp = Blueprint(
     'auth_bp', __name__
@@ -50,22 +53,21 @@ def register():
         first_name = data['first_name']
         last_name = data['last_name']
         password = data['password']
-        
+
         
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         new_user = User(email=email, first_name=first_name, last_name=last_name, password_hash=password_hash)
         db.session.add(new_user)
         db.session.commit()
-    
+
         return jsonify(
-            user = new_user.to_json(),                            
+            user = new_user.to_json(),
             message = 'Registered Successfully',    #if the registration process is successful, this message is displayed
             status = 201
         ), 201
     except Exception as e:
         db.session.rollback()
         return jsonify(
-            message = f'Registration Failed {e}',        #if the registration process is not successful, this message is displayed
             status = 400
         ), 400
 
@@ -77,9 +79,9 @@ def login():
         data = request.get_json()
         email = data['email']
         password = data['password']
-        
+
         user = User.query.filter_by(email=email).first()
-        
+
         if user:
             if bcrypt.check_password_hash(user.password_hash, password):
                 token = jwt.encode({'user_id': str(user.id)}, app.config['SECRET_KEY'], "HS256")
@@ -102,12 +104,77 @@ def login():
             ), 400
     except Exception as e:
         return jsonify(
-            message = f"An error occurred {e}",                     #if login is not successful, this message is displayed
             status = 500
         ), 500
-    
+
+# @csrf_exempt
+@auth_bp.route('/social_login', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def social_login():
+    """
+    Google calls this URL after the user has signed in with their Google account.
+    """
+    request_data = json.loads(request.data.decode('utf-8'))
+    data = request.get_json()  # This will parse the incoming JSON
+
+    # Extract the token and clientId from the JSON data
+    token = data.get('token')
+    client_id = data.get('clientId')
+
+    if not token or not client_id:
+        return jsonify({'error': 'token/client_id missing'}), 400
+
+    try:
+        # Verify the token with Google's API
+        user_data = id_token.verify_oauth2_token(
+            token,
+            google_requests.Request(),
+            client_id
+        )
+
+        email = user_data.get('email')
+        first_name = user_data.get('given_name', '')
+        last_name = user_data.get('family_name', '')
+
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            user = User(
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password_hash = bcrypt.generate_password_hash("google-login-placeholder").decode('utf-8')
+            )
+            db.session.add(user)
+            db.session.commit()
+            jwt_token = jwt.encode({'user_id': str(user.id), 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=12)}, app.config['SECRET_KEY'])
+            login_user(user)
+            return jsonify(
+                user = user.to_json(),
+                token = jwt_token,
+                message = 'Login Successful',           #if login is successful, this message is displayed
+                status = 200
+            ), 200
+        elif bcrypt.check_password_hash(user.password_hash, "google-login-placeholder"):
+            jwt_token = jwt.encode({'user_id': str(user.id), 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=12)}, app.config['SECRET_KEY'])
+            login_user(user)
+            return jsonify(
+                user = user.to_json(),
+                token = jwt_token,
+                message = 'Login Successful',           #if login is successful, this message is displayed
+                status = 200
+            ), 200
+        else:
+            return jsonify(
+                message = 'Unable to login',
+                status = 400
+            ), 400
+
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 403
+
+
 @auth_bp.route('/user/update/<id>', methods=['PATCH'])
-@cross_origin(supports_credentials=True)   
+@cross_origin(supports_credentials=True)
 def update(id):
     '''This method is called when the user requests to update the their credentials.'''
     try:
@@ -115,7 +182,7 @@ def update(id):
         first_name = data['first_name']
         last_name = data['last_name']
         email = data['email']
-        
+
         user = load_user(id)
         user.first_name = first_name
         user.last_name = last_name
@@ -131,7 +198,6 @@ def update(id):
         ), 201
     except Exception as e:
         return jsonify(
-            message = f'Update User Failed {e}',
             status = 400
         ), 400
 
@@ -148,10 +214,9 @@ def delete(id):
         ), 200
     except Exception as e:
         return jsonify(
-            message = f'Delete User Failed {e}',
             status = 400
-        ), 400    
-   
+        ), 400
+
 @auth_bp.route('/auth/logout')
 @login_required
 @cross_origin(supports_credentials=True)
@@ -165,6 +230,5 @@ def logout():
         ), 200
     except Exception as e:
         return jsonify(
-            message = f'Logout Failed {e}',
             status = 400
-        ), 400    
+        ), 400

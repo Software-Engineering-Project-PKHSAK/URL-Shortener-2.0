@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./styles.scss";
 import { useLogin } from "api/login";
+import GoogleAuthButton from "./GoogleSignIn"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -77,6 +78,9 @@ const Login = () => {
                   <button className="btn btn-main btn-block mb-3" type="submit">
                     {isSubmitting ? "Logging in..." : "Login"}
                   </button>
+                  <div style={{display:"flex", justifyContent: "center"}}>
+                    <GoogleAuthButton />
+                  </div>
                   <p>
                     I don’t have an account?{" "}
                     <Link to="/register">Create account</Link>

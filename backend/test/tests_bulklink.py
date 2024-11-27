@@ -4,24 +4,30 @@ from flask import json
 import sys
 import os
 import uuid  # Import uuid to create test UUIDs
+from backend.src.app import create_app, db
+import jwt
 
 # Add the src directory to the system path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from app import app, db  # Assuming your app is named "app.py" and "app" is the Flask instance.
-from src.models.user import User  # Importing the User model
-from src.models.links import Link  # Importing the Link model for the link tests
+# from app import app, db  # Assuming your app is named "app.py" and "app" is the Flask instance.
+from backend.src.models.user import User  # Importing the User model
+from backend.src.models.links import Link  # Importing the Link model for the link tests
 
 class TestLinkAPI(unittest.TestCase):
     def setUp(self):
         # Setup runs before each test
-        app.config.from_object('src.config.TestingConfig')
-        self.app = app.test_client()
-        self.app.testing = True
+        self.app = create_app("testing")
+        self.client = self.app.test_client()
+        self.client.testing = True
 
         # Add a user for testing
-        with app.app_context():
+        with self.app.app_context():
             db.create_all()
+            existing_user = User.query.filter_by(email="testuser@example.com").first()
+            if existing_user:
+                db.session.delete(existing_user)
+                db.session.commit()
             user = User(
                 id=uuid.uuid4(),
                 email="testuser@example.com",
@@ -32,10 +38,16 @@ class TestLinkAPI(unittest.TestCase):
             db.session.add(user)
             db.session.commit()
             self.user_id = user.id
+            self.token = jwt.encode({'user_id': str(user.id)}, self.app.config['SECRET_KEY'], "HS256")
+            self.headers = {
+                'Content-Type': 'application/json',
+                # Include the token in the Authorization header
+                'Authorization': f'Bearer {self.token}'
+            }
 
     def tearDown(self):
         # Teardown runs after each test
-        with app.app_context():
+        with self.app.app_context():
             db.session.remove()
             db.drop_all()
 

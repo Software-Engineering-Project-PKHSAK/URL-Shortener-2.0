@@ -2,14 +2,22 @@ import unittest
 from backend.src.app import create_app
 from backend.src.models.user import User
 from backend.src.models.links import Link, db
+import json
+
 
 class TestTaggingFeature(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
+        self.app = create_app('testing')
         self.app.testing = True
         self.client = self.app.test_client()
 
         with self.app.app_context():
+            db.create_all()
+            existing_user = User.query.filter_by(email="test_user@example.com").first()
+            if existing_user:
+                db.session.delete(existing_user)
+                db.session.commit()
+            # Create a test user
             test_user_data = {
                 "email": "test_tags@gmail.com",
                 "first_name": "Test",
@@ -17,13 +25,14 @@ class TestTaggingFeature(unittest.TestCase):
                 "password": "password",
             }
             self.client.post("/auth/register", json=test_user_data)
-            self.client.post(
+            response = self.client.post(
                 "/auth/login",
                 json={
                     "email": test_user_data["email"],
                     "password": test_user_data["password"],
                 },
             )
+            response_data = json.loads(response.data.decode('utf-8'))
             self.user = User.query.filter_by(email=test_user_data["email"]).first()
 
     def test_add_tags_to_link(self):

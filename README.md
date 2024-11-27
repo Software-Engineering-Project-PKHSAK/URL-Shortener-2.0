@@ -163,10 +163,10 @@ For installing the necessary libraries click on the links below for step by step
 #### Features: ⭐
 <ul>
   <li><b>A/B Testing</b>: Introduce multiple variants of redirection URLs with customizable weights to enable A/B testing. View live analysis directly on your dashboard!</li>
-  <li><b>JWT Implementation for Enhanced Security</b>: Replaced session-based user-id references with JSON Web Tokens (JWT) for secure backend and API communication, enhancing authorization and session management.</li>
   <li><b>Link Analytics</b>: Retrieve detailed device information, including type (Desktop, Mobile, etc.), operating system, and browser (name and version), when using our engagement API.</li>
   <li><b>Custom URL Stub</b>: Allow users to create personalized short URLs by setting their own custom aliases, validated using our stub validation API.</li>
   <li><b>Copy QR Code</b>: Easily copy QR codes as SVGs directly from the dashboard, simplifying integration into your app.</li>
+  <li><b>JWT Implementation for Enhanced Security</b>: Replaced session-based user-id references with JSON Web Tokens (JWT) for secure backend and API communication, enhancing authorization and session management.</li>
 </ul>
 
 #### Bugfixes: 🏹🐞
@@ -175,6 +175,18 @@ For installing the necessary libraries click on the links below for step by step
   <li>Editing a link now pre-fills all existing properties, so you no longer need to remember or re-enter them.</li>
   <li>Resolved a bug with the Enabled state on the edit screen to ensure it works reliably.</li>
 </ul>
+
+#### Videos: :movie_camera:
+- **A/B Testing**
+  ![alt "A/B Test"](./phase_4_gifs/ab_test.gif)
+- **Dashboard Analytics**
+  ![alt "Dashboard Analytics"](./phase_4_gifs/dashboard_analytics.gif)
+- **Custom URL Stub**
+  ![alt "Custom URL Stub"](./phase_4_gifs/validate_stub.gif)
+- **Copy QR**
+  ![alt "Copy QR"](./phase_4_gifs/copy_qr.gif)
+- **JWT Token**
+  ![alt "JWT Token"](./phase_4_gifs/jwt_auth.gif)
 
 ## Future Scope
 <ul>

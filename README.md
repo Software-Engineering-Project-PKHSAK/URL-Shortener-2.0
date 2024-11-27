@@ -50,12 +50,25 @@ Say goodbye to overwhelming character limits and hello to streamlined sharing! W
 ## Watch what makes URL-Shortener-3.0 amazing!
 
 
+https://github.com/user-attachments/assets/f03ee619-c28b-4df7-8a9f-122d565c0e28
 
-https://github.com/user-attachments/assets/c85ac3f4-8301-442c-b325-48390b14abaf
+#### Videos: :movie_camera:
+- **A/B Testing**
+  
+  ![alt "A/B Test"](./phase_4_gifs/ab_test.gif)
+- **Dashboard Analytics**
+  
+  ![alt "Dashboard Analytics"](./phase_4_gifs/dashboard_analytics.gif)
+- **Custom URL Stub**
+  
+  ![alt "Custom URL Stub"](./phase_4_gifs/validate_stub.gif)
+- **Copy QR**
+  
+  ![alt "Copy QR"](./phase_4_gifs/copy_qr.gif)
+- **JWT Token**
+  
+  ![alt "JWT Token"](./phase_4_gifs/jwt_auth.gif)
 
-
-
-https://github.com/user-attachments/assets/5094efe1-5a2b-47c3-8353-e98d873a37c7
 
 
 
@@ -176,22 +189,6 @@ For installing the necessary libraries click on the links below for step by step
   <li>Resolved a bug with the Enabled state on the edit screen to ensure it works reliably.</li>
 </ul>
 
-#### Videos: :movie_camera:
-- **A/B Testing**
-  
-  ![alt "A/B Test"](./phase_4_gifs/ab_test.gif)
-- **Dashboard Analytics**
-  
-  ![alt "Dashboard Analytics"](./phase_4_gifs/dashboard_analytics.gif)
-- **Custom URL Stub**
-  
-  ![alt "Custom URL Stub"](./phase_4_gifs/validate_stub.gif)
-- **Copy QR**
-  
-  ![alt "Copy QR"](./phase_4_gifs/copy_qr.gif)
-- **JWT Token**
-  
-  ![alt "JWT Token"](./phase_4_gifs/jwt_auth.gif)
 
 ## Future Scope
 <ul>

@@ -1,0 +1,53 @@
+name: Python Test Suite with PostgreSQL
+
+on:
+  push:
+    branches:
+      - main-development  # Trigger on push to the main-development branch
+  pull_request:
+    branches:
+      - main-development  # Trigger on pull request to the main-development branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Run the job on the latest Ubuntu runner
+
+    services:
+      postgres:
+        image: postgres:13  # Use PostgreSQL 13 docker image
+        options: >-
+          --env POSTGRES_USER=postgres --env POSTGRES_PASSWORD=postgres --env POSTGRES_DB=test_url_shortener
+        ports:
+          - 5432:5432  # Expose PostgreSQL on port 5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Checkout the repository code
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9  # Use Python 3.9 (or adjust version as necessary)
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-dotenv
+          pip install -r backend/requirements.txt  # Install your project dependencies
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -p 5432 -U postgres; do
+            echo "Waiting for PostgreSQL to be ready..."
+            sleep 2
+          done
+
+      - name: Set up Flask environment
+        run: |
+          echo "FLASK_ENV=testing" >> $GITHUB_ENV
+          echo "SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@localhost:5432/test_url_shortener" >> $GITHUB_ENV
+          echo "SECRET_KEY=178a204de99812c4662f161723b989e0dcc86b888472aa4cfdb2bf9df8ff3db9" >> $GITHUB_ENV
+
+      - name: Run tests
+        run: |
+          python3 -m unittest discover -s backend/test/ -p 'test_*.py'  # Run the tests

@@ -46,8 +46,8 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     SECRET_KEY = '178a204de99812c4662f161723b989e0dcc86b888472aa4cfdb2bf9df8ff3db9'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@localhost:5432/test_url_shortener'
-    
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'postgresql://postgres:postgres@localhost:5432/test_url_shortener'
+
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,

@@ -57,24 +57,21 @@ class TestLinkAPI(unittest.TestCase):
             "links": [
                 {"long_url": "https://example.com/1", "title": "Example 1"},
                 {"long_url": "https://example.com/2", "title": "Example 2"},
-                {"long_url": "https://example.com/3"},
-                {"long_url": "https://example.com/4", "utm_source": "source4"},
+                {"long_url": "https://example.com/3", "title": "Example 3"},
+                {"long_url": "https://example.com/4", "title": "Example 4", "utm_source": "source4"},
                 {"long_url": "https://example.com/5", "title": "Example 5", "utm_medium": "medium5"},
-                {"long_url": "https://example.com/6", "utm_campaign": "campaign6"},
+                {"long_url": "https://example.com/6", "title": "Example 6", "utm_campaign": "campaign6"},
                 {"long_url": "https://example.com/7", "title": "Example 7", "utm_term": "term7"},
-                {"long_url": "https://example.com/8", "utm_content": "content8"},
+                {"long_url": "https://example.com/8", "title": "Example 8", "utm_content": "content8"},
                 {"long_url": "https://example.com/9", "title": "Example 9", "disabled": True},
-                {"long_url": "https://example.com/10", "expire_on": "2024-12-31"}
+                {"long_url": "https://example.com/10", "title": "Example 10", "expire_on": "2024-12-31"}
             ]
-        }
-        headers = {
-            'Content-Type': 'application/json'
         }
 
         # Act
-        response = self.app.post(f'/links/create_bulk?user_id={self.user_id}',
+        response = self.client.post(f'/links/create_bulk',
                                  data=json.dumps(bulk_data),
-                                 headers=headers)
+                                 headers=self.headers)
         response_data = json.loads(response.data)
 
         # Assert
@@ -99,24 +96,21 @@ class TestLinkAPI(unittest.TestCase):
                 {"utm_source": "source6", "utm_medium": "medium6"}
             ]
         }
-        headers = {
-            'Content-Type': 'application/json'
-        }
 
         # Act
-        response = self.app.post(f'/links/create_bulk?user_id={self.user_id}',
+        response = self.client.post(f'/links/create_bulk',
                                  data=json.dumps(bulk_data),
-                                 headers=headers)
+                                 headers=self.headers)
         response_data = json.loads(response.data)
 
         # Assert
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response_data['status'], 400)
-        self.assertEqual(response_data['message'], "Bulk link creation failed: 'long_url'")
+        self.assertEqual(response_data['message'], "Long URL and title are required")
 
     def test_redirect_stub_success(self):
         # Arrange
-        with app.app_context():
+        with self.app.app_context():
             link = Link(
                 user_id=self.user_id,
                 stub='abc123',
@@ -127,7 +121,7 @@ class TestLinkAPI(unittest.TestCase):
             db.session.commit()
 
         # Act
-        response = self.app.get('/abc123')
+        response = self.client.get('/abc123')
 
         # Assert
         self.assertEqual(response.status_code, 302)  # 302 is the HTTP status code for redirects
@@ -135,7 +129,7 @@ class TestLinkAPI(unittest.TestCase):
 
     def test_redirect_stub_not_found(self):
         # Act
-        response = self.app.get('/notfound123')
+        response = self.client.get('/notfound123')
         response_data = json.loads(response.data)
 
         # Assert

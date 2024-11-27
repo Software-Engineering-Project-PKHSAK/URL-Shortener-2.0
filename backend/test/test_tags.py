@@ -34,6 +34,11 @@ class TestTaggingFeature(unittest.TestCase):
             )
             response_data = json.loads(response.data.decode('utf-8'))
             self.user = User.query.filter_by(email=test_user_data["email"]).first()
+            self.token = response_data.get("token")
+            self.headers = {
+                # Include the token in the Authorization header
+                'Authorization': f'Bearer {self.token}'
+            }
 
     def test_add_tags_to_link(self):
         """Test adding tags to a link."""
